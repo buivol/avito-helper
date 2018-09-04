@@ -53,10 +53,10 @@ AppAsset::register($this);
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
                     <!-- Logo icon -->
-                    <b><img src="/images/logo.png" alt="homepage" class="dark-logo"/></b>
+<!--                    <b>V</b>-->
                     <!--End Logo icon -->
                     <!-- Logo text -->
-                    <span><img src="/images/logo-text.png" alt="homepage" class="dark-logo"/></span>
+                    <span>AvitoHelper</span>
                 </a>
             </div>
             <!-- End Logo -->
@@ -85,13 +85,15 @@ AppAsset::register($this);
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     <li class="nav-devider"></li>
-                    <li class="nav-label">Г</li>
+                    <li class="nav-label">Основное</li>
                     <li><a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-tachometer"></i><span
-                                    class="hide-menu">Статисктика<span
+                                    class="hide-menu">Товары<span
                                         class="label label-rouded label-primary pull-right">2</span></span></a>
                         <ul aria-expanded="false" class="collapse">
-                            <li><a href="index.html">Ecommerce </a></li>
-                            <li><a href="index1.html">Analytics </a></li>
+                            <li><a href="/product/add">Добавить новый</a></li>
+                            <li><a href="/product">Все </a></li>
+                            <li><a href="/product/worked">В работе </a></li>
+                            <li><a href="/product/idle">В очереди </a></li>
                         </ul>
                     </li>
                 </ul>
@@ -106,11 +108,10 @@ AppAsset::register($this);
         <!-- Bread crumb -->
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
-                <h3 class="text-primary">Dashboard</h3></div>
+                <h3 class="text-primary"><?= $this->title ?></h3></div>
             <div class="col-md-7 align-self-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    <span style="margin-right: 10px;"><?= $this->context->user->username ?></span><a href="/logout">Выйти</a>
                 </ol>
             </div>
         </div>

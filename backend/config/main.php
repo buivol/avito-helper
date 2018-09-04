@@ -42,8 +42,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'api/yandexUpdate' => 'cron/yandex',
+                'logout' => 'site/logout',
+                'login' => 'site/login',
                 '' => 'site/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+
             ],
         ],
 

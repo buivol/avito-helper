@@ -186,4 +186,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::class, ['user_id' => 'id'])->andWhere(['product.status' => Group::STATUS_ACTIVE]);
+    }
 }

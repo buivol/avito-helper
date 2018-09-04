@@ -27,6 +27,7 @@ use Yii;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ * @property int $user_id
  */
 class Product extends \yii\db\ActiveRecord
 {

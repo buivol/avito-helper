@@ -10,7 +10,7 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BackendController
 {
     /**
      * {@inheritdoc}
@@ -51,6 +51,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'clean';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

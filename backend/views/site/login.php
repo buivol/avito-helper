@@ -7,28 +7,25 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Авторизация';
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
+<div class="col-lg-4">
+    <div class="login-content card">
+        <div class="login-form">
+            <h4>Вход в AvitoHelper</h4>
+            <?php $form = ActiveForm::begin(['id' => 'login-form', 'method' => 'post']); ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <label>Имя пользователя</label>
+                    <input type="text" name="username" class="form-control" placeholder="Имя пользователя">
                 </div>
-
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" name="password" class="form-control" placeholder="Пароль">
+                </div>
+                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Войти</button>
+                <div class="register-link m-t-15 text-center">
+                    <p>&copy; intDigit</p>
+                </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
