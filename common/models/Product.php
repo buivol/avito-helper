@@ -234,6 +234,9 @@ class Product extends \yii\db\ActiveRecord
             $this->yandex_model_id = $data['modelId'];
         }
 
+        $this->yandex_search = true;
+        $this->yandex_update = time();
+
         $this->save();
 
         dd($result);
