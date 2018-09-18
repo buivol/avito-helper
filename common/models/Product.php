@@ -186,59 +186,71 @@ class Product extends \yii\db\ActiveRecord
     public function updateYandex()
     {
         $result = YandexMarket::search($this->provider_art);
-        $data = $result['data'];
 
-        Product::updateYandexPhoto($this->id, $data['photos']);
-        Product::updateYandexNames($this->id, $data['names']);
-        Product::updateYandexDescriptions($this->id, $data['descriptions']);
-        Product::updateYandexSpecifications($this->id, $data['specifications']);
+        if ($result['status'] == YandexMarket::STATUS_OK) {
+            $data = $result['data'];
 
-        if (isset($data['prices']) && count($data['prices'])) {
-            $this->price_min = min($data['prices']);
-            $this->price_max = max($data['prices']);
+            Product::updateYandexPhoto($this->id, $data['photos']);
+            Product::updateYandexNames($this->id, $data['names']);
+            Product::updateYandexDescriptions($this->id, $data['descriptions']);
+            Product::updateYandexSpecifications($this->id, $data['specifications']);
+
+            if (isset($data['prices']) && count($data['prices'])) {
+                $this->price_min = min($data['prices']);
+                $this->price_max = max($data['prices']);
+            }
+
+
+            if (isset($data['vendor']['id'])) {
+                $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
+                if (!$vendor) {
+                    $vendor = new Vendor;
+                    $vendor->yandex_id = $data['vendor']['id'];
+                }
+                if (isset($data['vendor']['name'])) {
+                    $vendor->title = $data['vendor']['name'];
+                }
+                if (isset($data['vendor']['logo'])) {
+                    $vendor->logo = $data['vendor']['logo'];
+                }
+
+                $vendor->save();
+                $this->vendor_id = $vendor->id;
+            }
+
+            if (isset($data['category']) && isset($data['categoryId'])) {
+                $yaCat = YaCategory::findOne(['yandex_id' => $data['categoryId']]);
+                if (!$yaCat) {
+                    $yaCat = new YaCategory;
+                    $yaCat->yandex_id = $data['categoryId'];
+                    $yaCat->name = $data['category'];
+                    $yaCat->save();
+                }
+                $this->yandex_category_id = $yaCat->id;
+                if ($yaCat->sub_category_id && !$this->sub_category_id) {
+                    $this->sub_category_id = $yaCat->sub_category_id;
+                }
+            }
+
+            if (isset($data['modelId'])) {
+                $this->yandex_model_id = $data['modelId'];
+            }
+
+            $this->yandex_search = true;
+            $this->yandex_update = time();
+
+            $this->save();
+
+            // dd($result);
+        } else if ($result['data'] == YandexMarket::STATUS_NOT_FOUND) {
+            $this->yandex_update = time();
+            $this->yandex_search = true;
+            $this->save();
+        } else {
+            $this->yandex_update = time();
+            $this->yandex_update = false;
+            $this->save();
         }
-
-
-        if (isset($data['vendor']['id'])) {
-            $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
-            if (!$vendor) {
-                $vendor = new Vendor;
-                $vendor->yandex_id = $data['vendor']['id'];
-            }
-            if (isset($data['vendor']['name'])) {
-                $vendor->title = $data['vendor']['name'];
-            }
-            if (isset($data['vendor']['logo'])) {
-                $vendor->logo = $data['vendor']['logo'];
-            }
-
-            $vendor->save();
-            $this->vendor_id = $vendor->id;
-        }
-
-        if (isset($data['category']) && isset($data['categoryId'])) {
-            $yaCat = YaCategory::findOne(['yandex_id' => $data['categoryId']]);
-            if (!$yaCat) {
-                $yaCat = new YaCategory;
-                $yaCat->yandex_id = $data['categoryId'];
-                $yaCat->name = $data['category'];
-                $yaCat->save();
-            }
-            $this->yandex_category_id = $yaCat->id;
-            if($yaCat->sub_category_id && !$this->sub_category_id){
-                $this->sub_category_id = $yaCat->sub_category_id;
-            }
-        }
-
-        if(isset($data['modelId'])) {
-            $this->yandex_model_id = $data['modelId'];
-        }
-
-        $this->yandex_search = true;
-        $this->yandex_update = time();
-
-        $this->save();
-
-        dd($result);
     }
+
 }
