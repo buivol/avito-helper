@@ -118,13 +118,47 @@ class Product extends \yii\db\ActiveRecord
         return 0;
     }
 
+    public static function updateYandexDescriptions($productId, $descriptions)
+    {
+        if (!count($descriptions)) {
+            return 0;
+        }
+
+        $rows = [];
+        $dbDescriptions = Description::findAll(['product_id' => $productId, 'type' => Description::TYPE_YANDEX_MARKET]);
+        $dbDescriptions = ArrayHelper::map($dbDescriptions, 'id', 'text');
+        foreach ($descriptions as $description) {
+            if (!in_array($description, $dbDescriptions)) {
+                $rows[] = [
+                    'text' => $description,
+                    'product_id' => $productId,
+                    'type' => Description::TYPE_YANDEX_MARKET,
+                ];
+            }
+        }
+
+        if (count($rows)) {
+            try {
+                return Yii::$app->db->createCommand()->batchInsert(Description::tableName(), ['text', 'product_id', 'type'], $rows)->execute();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
+
+
 
     public function updateYandex()
     {
         $result = YandexMarket::search($this->provider_art);
         $data = $result['data'];
+
         Product::updateYandexPhoto($this->id, $data['photos']);
         Product::updateYandexNames($this->id, $data['names']);
+        Product::updateYandexDescriptions($this->id, $data['descriptions']);
 
         if (isset($data['vendor']['id'])) {
             $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
