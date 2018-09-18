@@ -248,7 +248,7 @@ class Product extends \yii\db\ActiveRecord
             $this->save();
         } else {
             $this->yandex_update = time();
-            $this->yandex_update = false;
+            $this->yandex_search = false;
             $this->save();
         }
     }
