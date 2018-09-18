@@ -32,13 +32,25 @@ class YandexMarket
             }
         }
         if (isset($item['name']) && !in_array($item['name'], $data['names'])) {
-            if(strlen($item['name'])) {
+            if (strlen($item['name'])) {
                 $data['names'][] = $item['name'];
             }
         }
 
+        if (isset($item['vendor'])) {
+            if (!isset($data['vendor']['name']) && strlen($item['vendor']['name'])) {
+                $data['vendor']['name'] = $item['vendor']['name'];
+            }
+            if (!isset($data['vendor']['id']) && strlen($item['vendor']['id'])) {
+                $data['vendor']['id'] = $item['vendor']['id'];
+            }
+            if (!isset($data['vendor']['logo']) && strlen($item['vendor']['picture'])) {
+                $data['vendor']['logo'] = $item['vendor']['picture'];
+            }
+        }
+
         if (isset($item['description']) && !in_array($item['description'], $data['descriptions'])) {
-            if(strlen($item['description'])) {
+            if (strlen($item['description'])) {
                 $data['descriptions'][] = $item['description'];
             }
         }
@@ -125,6 +137,7 @@ class YandexMarket
             'categoryId' => null,
             'category' => null,
             'modelId' => null,
+            'vendor' => [],
         ];
 
         foreach ($payload['items'] as $item) {

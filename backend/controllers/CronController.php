@@ -10,14 +10,15 @@ namespace backend\controllers;
 
 
 use common\helpers\YandexMarket;
+use common\models\Product;
 use yii\base\Controller;
 
 class CronController extends Controller
 {
     public function actionYandex()
     {
-        $query = 'AVRX250BTBKE2';
-        $result = YandexMarket::search($query);
-        dd($result);
+
+        $product = Product::findOne(1);
+        $product->updateYandex();
     }
 }
