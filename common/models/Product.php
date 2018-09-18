@@ -12,8 +12,6 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "products".
  *
  * @property int $id
- * @property int $category_id
- * @property int $subcategory_id
  * @property int $provider_id
  * @property string $provider_art
  * @property string $provider_title
@@ -32,6 +30,9 @@ use yii\helpers\ArrayHelper;
  * @property int $created_at
  * @property int $updated_at
  * @property int $user_id
+ * @property int $yandex_model_id
+ * @property int $sub_category_id
+ * @property int $yandex_category_id
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -213,6 +214,24 @@ class Product extends \yii\db\ActiveRecord
 
             $vendor->save();
             $this->vendor_id = $vendor->id;
+        }
+
+        if (isset($data['category']) && isset($data['categoryId'])) {
+            $yaCat = YaCategory::findOne(['yandex_id' => $data['categoryId']]);
+            if (!$yaCat) {
+                $yaCat = new YaCategory;
+                $yaCat->yandex_id = $data['categoryId'];
+                $yaCat->name = $data['category'];
+                $yaCat->save();
+            }
+            $this->yandex_category_id = $yaCat->id;
+            if($yaCat->sub_category_id && !$this->sub_category_id){
+                $this->sub_category_id = $yaCat->sub_category_id;
+            }
+        }
+
+        if(isset($data['modelId'])) {
+            $this->yandex_model_id = $data['modelId'];
         }
 
         $this->save();
