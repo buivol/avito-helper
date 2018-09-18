@@ -18,11 +18,14 @@ use yii\helpers\ArrayHelper;
  * @property string $provider_art
  * @property string $provider_title
  * @property string $provider_description
- * @property int $provider_price
  * @property string $yandex_update
  * @property int $yandex_search
  * @property int $vendor_id
  * @property float $price
+ * @property float $price_min
+ * @property float $price_max
+ * @property float $price_rrc
+ * @property float $price_zak
  * @property string $title
  * @property string $description
  * @property int $status
@@ -188,6 +191,12 @@ class Product extends \yii\db\ActiveRecord
         Product::updateYandexNames($this->id, $data['names']);
         Product::updateYandexDescriptions($this->id, $data['descriptions']);
         Product::updateYandexSpecifications($this->id, $data['specifications']);
+
+        if (isset($data['prices']) && count($data['prices'])) {
+            $this->price_min = min($data['prices']);
+            $this->price_max = max($data['prices']);
+        }
+
 
         if (isset($data['vendor']['id'])) {
             $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
