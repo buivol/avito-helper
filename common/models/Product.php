@@ -21,14 +21,10 @@ use yii\helpers\ArrayHelper;
  * @property int $provider_price
  * @property string $yandex_update
  * @property int $yandex_search
- * @property string $yandex_title
- * @property string $yandex_description
- * @property string $custom_title
- * @property string $custom_description
- * @property int $custom_price
- * @property string $current_price
- * @property string $current_title
- * @property string $current_description
+ * @property int $vendor_id
+ * @property float $price
+ * @property string $title
+ * @property string $description
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
@@ -102,6 +98,24 @@ class Product extends \yii\db\ActiveRecord
         $data = $result['data'];
         Product::updateYandexPhoto($this->id, $data['photos']);
 
+        if (isset($data['vendor']['id'])) {
+            $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
+            if (!$vendor) {
+                $vendor = new Vendor;
+                $vendor->yandex_id = $data['vendor']['id'];
+            }
+            if (isset($data['vendor']['name'])) {
+                $vendor->title = $data['vendor']['name'];
+            }
+            if (isset($data['vendor']['logo'])) {
+                $vendor->logo = $data['vendor']['logo'];
+            }
+
+            $vendor->save();
+            $this->vendor_id = $vendor->id;
+        }
+
+        $this->save();
 
         dd($result);
     }
