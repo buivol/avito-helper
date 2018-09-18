@@ -32,6 +32,10 @@ use yii\behaviors\TimestampBehavior;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_DISABLED = 2;
+    const STATUS_DELETED = 7;
+
     /**
      * {@inheritdoc}
      */

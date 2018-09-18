@@ -6,28 +6,23 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "photo".
+ * This is the model class for table "provider".
  *
  * @property int $id
- * @property int $type
- * @property string $src
+ * @property int $user_id
+ * @property string $title
+ * @property string $descriptions
+ * @property string $logo
  * @property int $status
- * @property int $product_id
- * @property int $sort
- * @property int $view
  * @property int $created_at
  * @property int $updated_at
  */
-class Photo extends \yii\db\ActiveRecord
+class Provider extends \yii\db\ActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
     const STATUS_DISABLED = 2;
     const STATUS_DELETED = 7;
-
-    const TYPE_YANDEX_MARKET = 1;
-    const TYPE_YANDEX_SEARCH = 2;
-    const TYPE_LOCAL_CDN = 3;
 
 
     /**
@@ -35,7 +30,7 @@ class Photo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'photo';
+        return 'provider';
     }
 
     /**
