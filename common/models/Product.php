@@ -148,7 +148,35 @@ class Product extends \yii\db\ActiveRecord
         return 0;
     }
 
+    public static function updateYandexSpecifications($productId, $specifications)
+    {
+        if (!count($specifications)) {
+            return 0;
+        }
 
+        $rows = [];
+        $dbSpecification = Specification::findAll(['product_id' => $productId, 'type' => Specification::TYPE_YANDEX_MARKET]);
+        $dbSpecification = ArrayHelper::map($dbSpecification, 'id', 'text');
+        foreach ($specifications as $specification) {
+            if (!in_array($specification, $dbSpecification)) {
+                $rows[] = [
+                    'text' => $specification,
+                    'product_id' => $productId,
+                    'type' => Specification::TYPE_YANDEX_MARKET,
+                ];
+            }
+        }
+
+        if (count($rows)) {
+            try {
+                return Yii::$app->db->createCommand()->batchInsert(Specification::tableName(), ['text', 'product_id', 'type'], $rows)->execute();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+
+        return 0;
+    }
 
 
     public function updateYandex()
@@ -159,6 +187,7 @@ class Product extends \yii\db\ActiveRecord
         Product::updateYandexPhoto($this->id, $data['photos']);
         Product::updateYandexNames($this->id, $data['names']);
         Product::updateYandexDescriptions($this->id, $data['descriptions']);
+        Product::updateYandexSpecifications($this->id, $data['specifications']);
 
         if (isset($data['vendor']['id'])) {
             $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
