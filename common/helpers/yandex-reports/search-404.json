@@ -1,0 +1,37 @@
+{
+  "status": "OK",
+  "context": {
+    "region": {
+      "id": 213,
+      "name": "Москва",
+      "type": "CITY",
+      "childCount": 14,
+      "country": 225
+    },
+    "currency": {
+      "id": "RUR",
+      "name": "руб."
+    },
+    "page": {
+      "number": 1,
+      "count": 10,
+      "total": 0,
+      "totalItems": 0
+    },
+    "processingOptions": {
+      "checkSpelled": true,
+      "text": "nesusdaasd",
+      "actualText": "nesusdaasd",
+      "highlightedText": "",
+      "adult": false
+    },
+    "id": "1536070923252/5d1127c098e4b65cdd456a296b1bcf58",
+    "time": "2018-09-04T17:22:03.425+03:00",
+    "link": "https://market.yandex.ru/search?onstock=0&text=nesusdaasd&free-delivery=0&how&pp=38"
+  },
+  "presentation": {
+    "__type": "grid"
+  },
+  "items": [],
+  "categories": []
+}

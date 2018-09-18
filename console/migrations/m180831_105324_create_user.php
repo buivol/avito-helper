@@ -12,20 +12,7 @@ class m180831_105324_create_user extends Migration
      */
     public function safeUp()
     {
-        $transaction = $this->getDb()->beginTransaction();
-        $user = \Yii::createObject([
-            'class'    => \common\models\User::class,
-            'scenario' => 'create',
-            'email'    => 'admin',
-            'username' => 'admin@example.com',
-            'password' => '7722',
-        ]);
-        if (!$user->insert(false)) {
-            $transaction->rollBack();
-            return false;
-        }
-        $user->confirm();
-        $transaction->commit();
+
     }
 
     /**

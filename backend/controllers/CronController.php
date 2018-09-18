@@ -14,10 +14,10 @@ use yii\base\Controller;
 
 class CronController extends Controller
 {
-    public function actionYandex($name = 'AVRX250BTBKE2')
+    public function actionYandex()
     {
-        $result = [];
-        $result['search'] = YandexMarket::search($name);
+        $query = 'AVRX250BTBKE2';
+        $result = YandexMarket::search($query);
         dd($result);
     }
 }
