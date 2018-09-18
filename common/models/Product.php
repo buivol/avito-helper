@@ -61,26 +61,21 @@ class Product extends \yii\db\ActiveRecord
         }
         $dbPhotos = Photo::findAll(['product_id' => $productId, 'type' => Photo::TYPE_YANDEX_MARKET]);
         $dbPhotos = ArrayHelper::map($dbPhotos, 'id', 'src');
-        $newPhotos = [];
+        $rows = [];
 
 
         foreach ($photos as $photo) {
             if (!in_array($photo, $dbPhotos)) {
-                $newPhotos[] = $photo;
-            }
-        }
-
-
-        if (count($newPhotos)) {
-            $rows = [];
-            foreach ($newPhotos as $newPhoto) {
                 $rows[] = [
-                    'src' => $newPhoto,
+                    'src' => $photo,
                     'product_id' => $productId,
                     'type' => Photo::TYPE_YANDEX_MARKET,
                     'created_at' => time(),
                 ];
             }
+        }
+
+        if (count($rows)) {
             try {
                 return Yii::$app->db->createCommand()->batchInsert(Photo::tableName(), ['src', 'product_id', 'type', 'created_at'], $rows)->execute();
             } catch (\Exception $e) {
@@ -92,11 +87,44 @@ class Product extends \yii\db\ActiveRecord
 
     }
 
+
+    public static function updateYandexNames($productId, $names)
+    {
+        if (!count($names)) {
+            return 0;
+        }
+
+        $rows = [];
+        $dbNames = Name::findAll(['product_id' => $productId, 'type' => Name::TYPE_YANDEX_MARKET]);
+        $dbNames = ArrayHelper::map($dbNames, 'id', 'text');
+        foreach ($names as $name) {
+            if (!in_array($name, $dbNames)) {
+                $rows[] = [
+                    'text' => $name,
+                    'product_id' => $productId,
+                    'type' => Name::TYPE_YANDEX_MARKET,
+                ];
+            }
+        }
+
+        if (count($rows)) {
+            try {
+                return Yii::$app->db->createCommand()->batchInsert(Name::tableName(), ['text', 'product_id', 'type'], $rows)->execute();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
+
     public function updateYandex()
     {
         $result = YandexMarket::search($this->provider_art);
         $data = $result['data'];
         Product::updateYandexPhoto($this->id, $data['photos']);
+        Product::updateYandexNames($this->id, $data['names']);
 
         if (isset($data['vendor']['id'])) {
             $vendor = Vendor::findOne(['yandex_id' => $data['vendor']['id']]);
