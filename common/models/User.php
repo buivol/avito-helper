@@ -20,6 +20,9 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Provider[] $providers
+ * @property Product[] $products
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -189,6 +192,11 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getProducts()
     {
-        return $this->hasMany(Product::class, ['user_id' => 'id'])->andWhere(['product.status' => Group::STATUS_ACTIVE]);
+        return $this->hasMany(Product::class, ['user_id' => 'id'])->andWhere(['status' => [Product::STATUS_ACTIVE, Product::STATUS_DISABLED]]);
+    }
+
+    public function getProviders()
+    {
+        return $this->hasMany(Provider::class, ['user_id' => 'id'])->andWhere(['status' => [Provider::STATUS_ACTIVE, Provider::STATUS_DISABLED]]);
     }
 }

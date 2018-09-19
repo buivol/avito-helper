@@ -96,6 +96,14 @@ AppAsset::register($this);
                             <li><a href="/product/idle">В очереди </a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-tachometer"></i><span
+                                    class="hide-menu">Поставщики<span
+                                        class="label label-rouded label-primary pull-right">14</span></span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="/provider/add">Добавить нового</a></li>
+                            <li><a href="/provider">Все</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

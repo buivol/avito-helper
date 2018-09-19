@@ -2,32 +2,29 @@
 
 namespace backend\controllers;
 
+use common\models\Provider;
 use Yii;
-use common\models\Product;
 use yii\web\NotFoundHttpException;
 
-/**
- * ProductController implements the CRUD actions for Product model.
- */
-class ProductController extends BackendController
+class ProviderController extends BackendController
 {
 
     public function actionIndex()
     {
-        $products = $this->user->products;
-        return $this->render('list', ['items' => $products]);
+        $providers = $this->user->providers;
+        return $this->render('list', ['items' => $providers]);
     }
 
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Product the loaded model
+     * @return Provider the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = Provider::findOne($id)) !== null) {
             return $model;
         }
 
