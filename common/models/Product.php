@@ -237,17 +237,17 @@ class Product extends \yii\db\ActiveRecord
             }
 
             $this->yandex_search = true;
-            $this->yandex_update = time();
+            $this->yandex_update = $result['historyId'];
 
             $this->save();
 
             // dd($result);
         } else if ($result['data'] == YandexMarket::STATUS_NOT_FOUND) {
-            $this->yandex_update = time();
+            $this->yandex_update = $result['historyId'];
             $this->yandex_search = true;
             $this->save();
         } else {
-            $this->yandex_update = time();
+            $this->yandex_update = $result['historyId'];
             $this->yandex_search = false;
             $this->save();
         }

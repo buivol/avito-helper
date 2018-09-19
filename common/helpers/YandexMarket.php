@@ -8,6 +8,7 @@
 
 namespace common\helpers;
 
+use common\models\YandexHistory;
 use yii\helpers\Json;
 
 class YandexMarket
@@ -114,17 +115,39 @@ class YandexMarket
         $link .= '&api_key=' . self::API_KEY;
 
 
-        if (self::DEBUG) {
-            $body = file_get_contents(__DIR__ . '/yandex-reports/search.json');
-        } else {
-            $request = \Requests::get($link);
-            $body = $request->body;
+        $body = '';
+
+        $history = new YandexHistory;
+        $history->api_key = self::API_KEY;
+        $history->link = $link;
+        $history->query = $name;
+
+        try {
+            if (self::DEBUG) {
+                $body = file_get_contents(__DIR__ . '/yandex-reports/search.json');
+            } else {
+                $request = \Requests::get($link);
+                $body = $request->body;
+            }
+        } catch (\Exception $e) {
+            $history->setBody($e->getMessage());
+            $result['status'] = self::STATUS_ERROR;
+            $history->code = $result['status'];
+            $history->save();
+            $result['historyId'] = $history->id;
+            return $result;
         }
+
+
+        $history->setBody($body);
 
         $payload = Json::decode($body);
 
         if (!$payload['context']['page']['totalItems']) {
             $result['status'] = self::STATUS_NOT_FOUND;
+            $history->code = $result['status'];
+            $history->save();
+            $result['historyId'] = $history->id;
             return $result;
         }
 
@@ -144,8 +167,12 @@ class YandexMarket
             self::parseItem($item, $data);
         }
 
+
         $result['data'] = $data;
         $result['status'] = self::STATUS_OK;
+        $history->code = $result['status'];
+        $history->save();
+        $result['historyId'] = $history->id;
 
         return $result;
     }
