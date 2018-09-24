@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 class ProviderController extends BackendController
 {
 
+    public $menu = 'provider';
+
     public function actionIndex()
     {
         $providers = $this->user->providers;

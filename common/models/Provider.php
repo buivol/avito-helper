@@ -16,6 +16,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ *
+ * @property Price[] $prices
  */
 class Provider extends \yii\db\ActiveRecord
 {
@@ -41,6 +43,11 @@ class Provider extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public function getPrices()
+    {
+        return $this->hasMany(Price::class, ['provider_id' => 'id'])->andWhere(['status' => [Price::STATUS_ACTIVE, Price::STATUS_DISABLED]]);
     }
 
 }

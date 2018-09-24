@@ -20,6 +20,7 @@ use yii\web\Controller;
 class BackendController extends Controller
 {
     public $user = null;
+    public $menu = 'main';
 
     public function beforeAction($action)
     {

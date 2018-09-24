@@ -12,8 +12,6 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/helper.css',
-        'css/style.css'
     ];
     public $js = [
     ];
