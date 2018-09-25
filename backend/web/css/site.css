@@ -62,3 +62,31 @@
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
 }
+
+.file-drop{
+    height: 200px;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px dashed #3184F1;
+    background: #FEFEFE;
+    cursor: pointer;
+    /*border: 2px dashed #F2F5FA;*/
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.file-drop .hint{
+    color: #b1bccd;
+    margin-top: 80px;
+    position: relative;
+    display: block;
+}
+.dz-started .hint{
+    display: none;
+}
+.drop-price .dz-success-mark{
+    display: none;
+}
+.drop-price .dz-error-mark{
+    display: none;
+}

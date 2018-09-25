@@ -23,7 +23,7 @@ require.config({
         'circle-progress': 'assets/js/vendors/circle-progress.min',
 		'dropzone': 'assets/js/dropzone',
     }
-})
+});
 
 window.tabler = {
     colors: {

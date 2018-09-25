@@ -36,15 +36,15 @@
     "url": "https://github.com/tabler/tabler/issues"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "bootstrap": "^4.1.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-rtlcss": "^1.2.0",
     "gulp-sass": "^3.1.0",
-    "bootstrap": "^4.1.0",
     "npm-run-all": "^4.1.2"
   },
   "dependencies": {
+    "gulp": "^3.9.1",
     "opencollective": "^1.0.3"
   },
   "files": [

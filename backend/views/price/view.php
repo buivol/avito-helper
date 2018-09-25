@@ -68,20 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="price-source price-source-file">
-                        <p>
-                            Загрузить файл напрямую с устройства
-                        </p>
-
-                        <div class="form-group">
-                            <div class="form-label">Файл прайса</div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="autoupdate[file]">
-                                <label class="custom-file-label">Выбрать файл</label>
-                            </div>
+                        <div id="price-upload-zone" class="file-drop drop-price">
+                            <span class="hint">Переместите файл в эту зону или нажмите чтобы выбрать</span>
                         </div>
-
-                        <form action="upload.php" class="dropzone" id="my-dropzone"></form>
-
 
                         <div class="alert alert-primary">Этот способ не поддерживает автоматическое обновлениие.<br><a
                                     href="#" class="alert-link">Подробнее про обновления</a></div>
@@ -382,29 +371,6 @@ $this->params['breadcrumbs'][] = $this->title;
     require(['jquery', 'selectize', 'bootstrap', 'dropzone'], function ($, selectize) {
         $(document).ready(function () {
 
-
-            Dropzone.options.myDropzone = {
-                init: function() {
-                    thisDropzone = this;
-                    <!-- 4 -->
-                    $.get('upload.php', function(data) {
-
-                        <!-- 5 -->
-                        $.each(data, function(key,value){
-
-                            var mockFile = { name: value.name, size: value.size };
-
-                            thisDropzone.options.addedfile.call(thisDropzone, mockFile);
-
-                            thisDropzone.options.thumbnail.call(thisDropzone, mockFile, "uploads/"+value.name);
-
-                        });
-
-                    });
-                }
-            };
-
-
             console.log('init');
             $('.help-1').popover({
                 trigger: 'hover',
@@ -494,6 +460,15 @@ $this->params['breadcrumbs'][] = $this->title;
             });
 
             $('#select-beast').selectize({});
+
+            $("div#price-upload-zone").dropzone({
+                url: "/media/add?type=price_file",
+                paramName: "file",
+                uploadMultiple: false,
+            });
+
+
+
 
             $('#select-users').selectize({
                 render: {
