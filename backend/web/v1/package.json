@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "gulp": "^3.9.1",
-    "opencollective": "^1.0.3"
+    "opencollective": "^1.0.3",
+    "sweetalert2": "^7.28.2"
   },
   "files": [
     "dist/",

@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-4">
         <div class="card">
             <div class="card-header">Загрузить новый файл</div>
+            <div id="price-error" class="card-alert alert alert-danger mb-0" style="display: none;">
+                Неизвестная ошибка
+            </div>
             <div class="card-body">
                 <form id="price-main">
                     <div class="form-group">
@@ -322,9 +325,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             </div>
-            <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary parser-save">Сохранить</button>
-            </div>
 
         </div>
 
@@ -334,7 +334,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-4">
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">История обновлений</h2>
+                <div>История обновлений</div>
                 <div class="card-options">
                     <small>(последние 30)</small>
                 </div>
@@ -442,12 +442,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 parserConditionsRefresh();
             });
 
-            $('.parser-save').on('click', function (e) {
+            function viewError(text)
+            {
+                var $error = $("#price-error");
+                $error.html(text);
+                $error.show(0);
+                $('html, body').animate({scrollTop: $error.offset().top}, 700);
+            }
+
+            $('#save').on('click', function (e) {
                 e.preventDefault();
+                $("#price-error").hide(0);
                 var dataParser = $('#parser-conditions').serialize();
                 var dataMain = $('#price-main').serialize();
                 var data = dataMain + '&' + dataParser;
                 console.log(data);
+                viewError('test error');
             });
 
             $('#input-tags').selectize({

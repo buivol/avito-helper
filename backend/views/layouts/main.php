@@ -81,9 +81,9 @@ AppAsset::register($this);
 
                     <div class="d-flex order-lg-2 ml-auto">
                         <div class="nav-item d-none d-md-flex">
-                            <a href="/bug" class="btn btn-sm btn-outline-primary">Сообщить об ошибке</a>
+                            <a href="/bug" class="btn btn-icon btn-sm btn-outline-primary"><i class="fa fa-bug"></i></a>
                         </div>
-                        <div class="dropdown">
+                        <div class="dropdown" style="margin-left: -7px;">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                                 <span class="avatar avatar-placeholder"></span>
                                 <span class="ml-2 d-none d-lg-block">
@@ -110,13 +110,22 @@ AppAsset::register($this);
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 ml-auto">
+                    <div class="col-lg-3 ml-auto text-right">
+                        <?php if($this->context->saveButton || $this->context->backButton): ?>
+                            <?php if($this->context->backButton): ?>
+                                <a id="back" href="<?= $this->context->backButton ?>" class="btn btn-secondary">Назад</a>
+                            <?php endif; ?>
+                            <?php if($this->context->saveButton): ?>
+                                <a id="save" href="#" class="btn btn-primary"><i class="fe fe-check mr-2"></i><?= $this->context->saveButton ?></a>
+                            <?php endif; ?>
+                        <?php else: ?>
                         <form class="input-icon my-3 my-lg-0">
                             <input type="search" class="form-control header-search" placeholder="Найти товар" tabindex="1">
                             <div class="input-icon-addon">
                                 <i class="fe fe-search"></i>
                             </div>
                         </form>
+                        <?php endif; ?>
                     </div>
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
@@ -222,7 +231,7 @@ AppAsset::register($this);
                             </ul>
                         </div>
                         <div class="col-auto">
-                            <a href="/bug" class="btn btn-outline-primary btn-sm">Сообщить об ошибке</a>
+                            <a href="/bug" class="btn btn-outline-primary btn-sm">Задать вопрос</a>
                         </div>
                     </div>
                 </div>

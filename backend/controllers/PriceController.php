@@ -14,6 +14,8 @@ class PriceController extends BackendController
 
     public function actionView($id)
     {
+        $this->backButton = '/provider';
+        $this->saveButton = 'Сохранить';
         $model = $this->findModel($id);
         return $this->render('view', ['model' => $model]);
     }
