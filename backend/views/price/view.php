@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <form id="price-main">
                     <div class="form-group">
                         <label class="form-label">Название прайса</label>
-                        <input type="text" class="form-control" name="title" placeholder="Придумайте название">
+                        <input type="text" class="form-control" id="price-name" name="title" placeholder="Придумайте название">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Источник</label>
@@ -68,6 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="price-source price-source-file">
+                        <input type="hidden" id="price-file" name="autoupdate[file]">
+
                         <div id="price-upload-zone" class="file-drop drop-price">
                             <span class="hint">Переместите файл в эту зону или нажмите чтобы выбрать</span>
                         </div>
@@ -462,9 +464,20 @@ $this->params['breadcrumbs'][] = $this->title;
             $('#select-beast').selectize({});
 
             $("div#price-upload-zone").dropzone({
-                url: "/media/add?type=price_file",
+                url: "/media/add?type=price",
+                acceptedFiles: ".xls,.xlsx,.csv",
                 paramName: "file",
                 uploadMultiple: false,
+                maxFiles: 1,
+                init: function () {
+                    this.on("complete", function (file) {
+                        console.log('uploaded', file.name, file.xhr.response);
+                        $('#price-file').val(file.xhr.response);
+                        if($('#price-name').val().length < 1){
+                            $('#price-name').val(file.name.split('.')[0]);
+                        }
+                    });
+                }
             });
 
 

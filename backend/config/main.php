@@ -43,6 +43,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'api/yandexUpdate' => 'cron/yandex',
+                'POST media/add' => 'media/upload',
                 'logout' => 'site/logout',
                 'login' => 'site/login',
                 '' => 'site/index',

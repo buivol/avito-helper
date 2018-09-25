@@ -70,7 +70,6 @@
     border: 2px dashed #3184F1;
     background: #FEFEFE;
     cursor: pointer;
-    /*border: 2px dashed #F2F5FA;*/
     margin-bottom: 10px;
     text-align: center;
 }
@@ -89,4 +88,23 @@
 }
 .drop-price .dz-error-mark{
     display: none;
+}
+.drop-price .dz-image img{
+    display: none;
+}
+
+.drop-price .dz-image{
+    width: 100%;
+    height: 100px;
+    background: url("/img/spreadsheet.png") no-repeat center center;
+    background-size: 65px 65px;
+    opacity: .8;
+}
+.drop-price .dz-preview{
+    display: none;
+}
+
+.drop-price .dz-processing{
+    display: block;
+    margin-top: 15px;
 }
