@@ -46,6 +46,12 @@ AppAsset::register($this);
     <script>
         requirejs.config({
             baseUrl: '/v1/dist/',
+            shim: {
+                'bootstrap': ['jquery'],
+                'sparkline': ['jquery'],
+                'tablesorter': ['jquery'],
+                'core': ['bootstrap', 'jquery'],
+            },
             paths: {
                 'core': 'assets/js/core',
                 'jquery': 'assets/js/vendors/jquery-3.2.1.min',
@@ -57,6 +63,7 @@ AppAsset::register($this);
                 'dropzone': 'assets/js/dropzone',
             }
         });
+        require(['core']);
     </script>
 
     <link href="/v1/dist/assets/css/dashboard.css" rel="stylesheet"/>
