@@ -104,7 +104,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="btn-list text-right m-b-10">
                                     <input type="hidden" value="0" class="condition-active" name="autoupdate[active]">
                                     <label class="custom-switch m-0">
-                                        <input type="checkbox" value="1" class="custom-switch-input"<?= $model->auto_update ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" value="1"
+                                               class="custom-switch-input"<?= $model->auto_update ? ' checked="checked"' : '' ?>
                                                name="autoupdate[active]">
                                         <span class="custom-switch-indicator"></span>
                                     </label>
@@ -113,37 +114,44 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="form-group">
                                 <div class="selectgroup selectgroup-pills">
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][mon]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::MON) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][mon]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::MON) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">пн</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][tue]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::TUE) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][tue]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::TUE) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">вт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][wes]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::WES) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][wes]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::WES) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">ср</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][thu]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::THU) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][thu]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::THU) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">чт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][fri]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::FRI) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][fri]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::FRI) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">пт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][sat]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::SAT) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][sat]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::SAT) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">сб</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days][sun]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::SUN) ? ' checked="checked"' : '' ?>
+                                        <input type="checkbox" name="autoupdate[days][sun]"
+                                               value="1"<?= $model->checkDay(\common\helpers\DateHelper::SUN) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">вс</span>
                                     </label>
@@ -166,7 +174,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="form-group">
                                 <div class="form-label">Если товар пропал из прайса:</div>
                                 <label class="custom-switch">
-                                    <input type="checkbox" name="autoupdate[hide]" value="1" class="custom-switch-input"<?= $model->auto_update_hide ? ' checked="checked"' : '' ?>>
+                                    <input type="checkbox" name="autoupdate[hide]" value="1"
+                                           class="custom-switch-input"<?= $model->auto_update_hide ? ' checked="checked"' : '' ?>>
                                     <span class="custom-switch-indicator"></span>
                                     <span class="custom-switch-description">Скрывать позиции</span>
                                 </label>
@@ -184,100 +193,102 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card-header">Настройки парсера</div>
             <div class="card-body">
 
+                <form id="parser">
+                    <div class="form-group">
+                        <div class="row gutters-xs">
 
-                <div class="form-group">
-                    <div class="row gutters-xs">
-
-                        <div class="col-7 align-self-center">
-                            <label class="form-label">Колонка с наименованием</label>
-                        </div>
-                        <div class="col-4">
-                            <?= \yii\bootstrap\Html::dropDownList('parser[excel][title]', 'F', \common\helpers\ExcelParser::getABCArray(), ['class' => 'form-control custom-select']) ?>
-                        </div>
-                        <span class="col-auto align-self-center">
+                            <div class="col-7 align-self-center">
+                                <label class="form-label">Колонка с наименованием</label>
+                            </div>
+                            <div class="col-4">
+                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][title]', 'F', \common\helpers\ExcelParser::getABCArray(), ['class' => 'form-control custom-select']) ?>
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="row gutters-xs">
+                    <div class="form-group">
+                        <div class="row gutters-xs">
 
-                        <div class="col-7 align-self-center">
-                            <label class="form-label">Первая строка</label>
-                        </div>
-                        <div class="col-4">
-                            <input type="number" class="form-control w-100" min="1" value="3">
-                        </div>
-                        <span class="col-auto align-self-center">
+                            <div class="col-7 align-self-center">
+                                <label class="form-label">Первая строка</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="number" class="form-control w-100" min="1" value="3">
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="row gutters-xs">
+                    <div class="form-group">
+                        <div class="row gutters-xs">
 
-                        <div class="col-7 align-self-center">
-                            <label class="form-label">Номер листа (для Excel)</label>
-                        </div>
-                        <div class="col-4">
-                            <input type="number" class="form-control w-100" min="1" value="1">
-                        </div>
-                        <span class="col-auto align-self-center">
+                            <div class="col-7 align-self-center">
+                                <label class="form-label">Номер листа (для Excel)</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="number" class="form-control w-100" min="1" value="1">
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="form-group">
-                    <div class="row gutters-xs">
+                    <div class="form-group">
+                        <div class="row gutters-xs">
 
-                        <div class="col-7 align-self-center">
-                            <label class="form-label">Колонка с описанием</label>
-                        </div>
-                        <div class="col-4">
-                            <?= \yii\bootstrap\Html::dropDownList('parser[excel][description]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
-                        </div>
-                        <span class="col-auto align-self-center">
+                            <div class="col-7 align-self-center">
+                                <label class="form-label">Колонка с описанием</label>
+                            </div>
+                            <div class="col-4">
+                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][description]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="form-group">
-                    <div class="row gutters-xs">
+                    <div class="form-group">
+                        <div class="row gutters-xs">
 
-                        <div class="col-7 align-self-center">
-                            <label class="form-label">Колонка с ценой</label>
-                        </div>
-                        <div class="col-4">
-                            <?= \yii\bootstrap\Html::dropDownList('parser[excel][price]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
-                        </div>
-                        <span class="col-auto align-self-center">
+                            <div class="col-7 align-self-center">
+                                <label class="form-label">Колонка с ценой</label>
+                            </div>
+                            <div class="col-4">
+                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][price]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
-                    </div>
-                </div>
-
-                <hr>
-
-
-                <div class="form-label" style="margin-top: -10px; margin-bottom: 15px;">
-                    <div class="row gutters-xs">
-                        <div class="col-5">Условия</div>
-                        <div class="col-6 text-right">
-                            <button type="button" class="parser-add-condition btn btn-secondary btn-sm">Добавить новое
-                            </button>
                         </div>
-                        <span class="col-auto align-self-center">
+                    </div>
+
+                    <hr>
+
+
+                    <div class="form-label" style="margin-top: -10px; margin-bottom: 15px;">
+                        <div class="row gutters-xs">
+                            <div class="col-5">Условия</div>
+                            <div class="col-6 text-right">
+                                <button type="button" class="parser-add-condition btn btn-secondary btn-sm">Добавить
+                                    новое
+                                </button>
+                            </div>
+                            <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
                         </span>
+                        </div>
                     </div>
-                </div>
 
+                </form>
 
                 <form id="parser-conditions">
 
@@ -456,7 +467,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             $('#save').on('click', function (e) {
                 e.preventDefault();
-                ui.post('/price/save', ['#parser-conditions', '#price-main']);
+                ui.post('/price/save', ['#parser', '#parser-conditions', '#price-main']);
             });
 
             $('#input-tags').selectize({

@@ -25,6 +25,12 @@ function () {
     value: function version() {
       return '0.2';
     }
+  }, {
+    key: "appendObjTo",
+    value: function appendObjTo(thatArray, newObj) {
+      var frozenObj = Object.freeze(newObj);
+      return Object.freeze(thatArray.concat(frozenObj));
+    }
     /**
      *
      * @param url
@@ -38,17 +44,16 @@ function () {
 
       this.saveBtn.addClass('btn-loading');
       $('.ui-error').hide(0);
-      var data = [];
-
-      for (var i = 0; i < selArray.length; i++) {
-        data.push($(selArray[i]).serializeArray());
-      }
-
-      data[1].push({
+      var data = [{
         name: this.param,
         value: this.token
-      });
-      data = data[1];
+      }];
+
+      for (var i = 0; i < selArray.length; i++) {
+        data = this.appendObjTo(data, $(selArray[i]).serializeArray());
+      }
+
+      console.log(data, selArray);
       $.post(url, data, function (responseText) {
         var response = JSON.parse(responseText);
 

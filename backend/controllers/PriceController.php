@@ -38,7 +38,7 @@ class PriceController extends BackendController
 
     public function actionSave()
     {
-        $ui = new UIRender(1, '/provider');
+        $ui = new UIRender(0, '/provider');
         $post = Yii::$app->request->post();
         if ($post['id'] == 'new') {
             $price = new Price;
