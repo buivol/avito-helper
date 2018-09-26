@@ -28,7 +28,6 @@ class UIRender {
 		for (let i = 0; i < selArray.length; i++) {
 			data = this.appendObjTo(data, $(selArray[i]).serializeArray());
 		}
-		console.log(data, selArray);
 		$.post(url, data, responseText => {
 			const response = JSON.parse(responseText);
 			if (response.status === 'ok') {

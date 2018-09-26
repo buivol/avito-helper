@@ -201,7 +201,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label class="form-label">Колонка с наименованием</label>
                             </div>
                             <div class="col-4">
-                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][title]', 'F', \common\helpers\ExcelParser::getABCArray(), ['class' => 'form-control custom-select']) ?>
+                                <?= \yii\bootstrap\Html::dropDownList('parser[title]', $model->getParserParam('title', 'F'), \common\helpers\ExcelParser::getABCArray(), ['class' => 'form-control custom-select']) ?>
                             </div>
                             <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
@@ -216,7 +216,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label class="form-label">Первая строка</label>
                             </div>
                             <div class="col-4">
-                                <input type="number" class="form-control w-100" min="1" value="3">
+                                <input type="number" class="form-control w-100" min="1" name="parser[line]" value="<?= $model->getParserParam('line', 3) ?>">
                             </div>
                             <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
@@ -231,7 +231,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label class="form-label">Номер листа (для Excel)</label>
                             </div>
                             <div class="col-4">
-                                <input type="number" class="form-control w-100" min="1" value="1">
+                                <input type="number" class="form-control w-100" name="parser[list]" min="1" value="<?= $model->getParserParam('list', 1) ?>">
                             </div>
                             <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
@@ -247,7 +247,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label class="form-label">Колонка с описанием</label>
                             </div>
                             <div class="col-4">
-                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][description]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
+                                <?= \yii\bootstrap\Html::dropDownList('parser[description]', $model->getParserParam('description', ''), \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
                             </div>
                             <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>
@@ -263,7 +263,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <label class="form-label">Колонка с ценой</label>
                             </div>
                             <div class="col-4">
-                                <?= \yii\bootstrap\Html::dropDownList('parser[excel][price]', '', \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
+                                <?= \yii\bootstrap\Html::dropDownList('parser[price]', $model->getParserParam('price', ''), \common\helpers\ExcelParser::getABCArray(true), ['class' => 'form-control custom-select']) ?>
                             </div>
                             <span class="col-auto align-self-center">
                               <span class="form-help help-1">?</span>

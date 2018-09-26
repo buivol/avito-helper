@@ -5,6 +5,7 @@ namespace common\models;
 use common\helpers\DateHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "price".
@@ -70,25 +71,25 @@ class Price extends \yii\db\ActiveRecord
         $active = $this->source_type == self::SOURCE_TYPE_LINK;
 
         $bits = 0;
-        if(isset($array['days']['mon']) && $array['days']['mon']){
+        if (isset($array['days']['mon']) && $array['days']['mon']) {
             $bits += DateHelper::MON;
         }
-        if(isset($array['days']['tue']) && $array['days']['tue']){
+        if (isset($array['days']['tue']) && $array['days']['tue']) {
             $bits += DateHelper::TUE;
         }
-        if(isset($array['days']['wes']) && $array['days']['wes']){
+        if (isset($array['days']['wes']) && $array['days']['wes']) {
             $bits += DateHelper::WES;
         }
-        if(isset($array['days']['thu']) && $array['days']['thu']){
+        if (isset($array['days']['thu']) && $array['days']['thu']) {
             $bits += DateHelper::THU;
         }
-        if(isset($array['days']['fri']) && $array['days']['fri']){
+        if (isset($array['days']['fri']) && $array['days']['fri']) {
             $bits += DateHelper::FRI;
         }
-        if(isset($array['days']['sat']) && $array['days']['sat']){
+        if (isset($array['days']['sat']) && $array['days']['sat']) {
             $bits += DateHelper::SAT;
         }
-        if(isset($array['days']['sun']) && $array['days']['sun']){
+        if (isset($array['days']['sun']) && $array['days']['sun']) {
             $bits += DateHelper::SUN;
         }
         $active = $bits && $active && isset($array['active']) && $array['active'];
@@ -100,6 +101,30 @@ class Price extends \yii\db\ActiveRecord
         $this->auto_update_hide = isset($array['hide']) && $array['hide'];
 
     }
+
+    /**
+     * @param array $array
+     */
+    public function loadParserParams($array)
+    {
+        $parser = $array;
+        $this->parser = Json::encode($parser);
+    }
+
+    /**
+     * @param string $param
+     * @param null $default
+     * @return null
+     */
+    public function getParserParam($param, $default = null)
+    {
+        $parserJson = Json::decode($this->parser);
+        if (isset($parserJson[$param])) {
+            return $parserJson[$param];
+        }
+        return $default;
+    }
+
 
     public function checkDay($flag)
     {

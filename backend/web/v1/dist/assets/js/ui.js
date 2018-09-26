@@ -53,7 +53,6 @@ function () {
         data = this.appendObjTo(data, $(selArray[i]).serializeArray());
       }
 
-      console.log(data, selArray);
       $.post(url, data, function (responseText) {
         var response = JSON.parse(responseText);
 
