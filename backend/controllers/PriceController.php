@@ -87,7 +87,7 @@ class PriceController extends BackendController
         }
 
         $price->loadAutoUpdateParams($post['autoupdate']);
-        $price->loadParserParams($post['parser']);
+        $price->loadParserParams($post['parser'], $post['condition']);
 
         if (!$ui->isError()) {
             $price->save();

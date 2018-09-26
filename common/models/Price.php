@@ -32,6 +32,7 @@ use yii\helpers\Json;
  * @property PriceUpdate $lastUpdate
  * @property Provider $provider
  * @property PriceUpdate[] $updates
+ * @property array $conditions
  */
 class Price extends \yii\db\ActiveRecord
 {
@@ -104,10 +105,12 @@ class Price extends \yii\db\ActiveRecord
 
     /**
      * @param array $array
+     * @param array $conditions
      */
-    public function loadParserParams($array)
+    public function loadParserParams($array, $conditions)
     {
         $parser = $array;
+        $parser['conditions'] = $conditions;
         $this->parser = Json::encode($parser);
     }
 
@@ -118,11 +121,27 @@ class Price extends \yii\db\ActiveRecord
      */
     public function getParserParam($param, $default = null)
     {
+        if (!strlen($this->parser)) {
+            return $default;
+        }
         $parserJson = Json::decode($this->parser);
         if (isset($parserJson[$param])) {
             return $parserJson[$param];
         }
         return $default;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConditions()
+    {
+        if (!strlen($this->parser)) {
+            return [];
+        }
+        $parserJson = Json::decode($this->parser);
+        $conditions = isset($parserJson['conditions']) ? $parserJson['conditions'] : [];
+        return $conditions;
     }
 
 

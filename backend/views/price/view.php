@@ -291,7 +291,56 @@ $this->params['breadcrumbs'][] = $this->title;
                 </form>
 
                 <form id="parser-conditions">
+                    <?php foreach ($model->conditions as $num => $condition): ?>
 
+                        <fieldset id="parser-condition-<?= $num ?>" class="form-fieldset parser-condition">
+                            <label class="form-label" style="float: left;">Условие <span
+                                        class="condition-number"><?= $num ?></span></label>
+                            <div class="btn-list text-right m-b-10">
+                                <input type="hidden" value="0"  name="condition[<?= $num ?>][active]" class="condition-active">
+                                <label class="custom-switch m-0">
+                                    <input type="checkbox" value="1" name="condition[<?= $num ?>][active]" class="custom-switch-input condition-active"<?= $condition['active'] ? ' checked="checked"' : '' ?>>
+                                    <span class="custom-switch-indicator"></span>
+                                </label>
+                                <a href="#" class="btn btn-field condition-remove" data-num="<?= $num ?>"><i class="fe fe-trash"></i></a>
+                            </div>
+                            <div class="form-group">
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="condition[<?= $num ?>][action]" value="add"
+                                               class="selectgroup-input condition-action"<?= ($condition['action'] == 'add') ? ' checked="checked"' : '' ?>>
+                                        <span class="selectgroup-button">Добавлять</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="condition[<?= $num ?>][action]" value="skip"
+                                               class="selectgroup-input condition-action"<?= ($condition['action'] == 'skip') ? ' checked="checked"' : '' ?>>
+                                        <span class="selectgroup-button">Пропускать</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row gutters-xs">
+
+                                    <div class="col-4 align-self-center">
+                                        <label class="form-label">Если колонка</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <?= \yii\bootstrap\Html::dropDownList('condition[' . $num . '][col]', $condition['col'], \common\helpers\ExcelParser::getABCArray(), ['class' => 'form-control custom-select condition-col']) ?>
+                                    </div>
+                                    <div class="col-4">
+                                        <?= \yii\bootstrap\Html::dropDownList('condition[' . $num . '][condition]', $condition['condition'], \common\helpers\ExcelParser::getConditionsArray(), ['data-num' => $num, 'class' => 'form-control custom-select condition-condition']) ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group condition-text-block" id="condition-text-block-<?= $num ?>">
+                                <input type="text" class="form-control condition-text" name="condition[<?= $num ?>][text]"
+                                       placeholder="" value="<?= $condition['text'] ?>">
+                            </div>
+                        </fieldset>
+
+                    <?php endforeach; ?>
                 </form>
 
 
@@ -392,7 +441,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <script>
-    require(['jquery', 'selectize', 'bootstrap', 'dropzone'], function ($, selectize) {
+    require(['jquery', 'bootstrap', 'dropzone'], function ($) {
         $(document).ready(function () {
 
             console.log('init');
@@ -411,6 +460,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 if (sh) $('#condition-text-block-' + n).show(100);
                 else $('#condition-text-block-' + n).hide(100)
             });
+
+            $('.condition-condition').trigger('change');
 
             $(document).on('click', '.condition-remove', function (e) {
                 e.preventDefault();
@@ -470,19 +521,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ui.post('/price/save', ['#parser', '#parser-conditions', '#price-main']);
             });
 
-            $('#input-tags').selectize({
-                delimiter: ',',
-                persist: false,
-                create: function (input) {
-                    return {
-                        value: input,
-                        text: input
-                    }
-                }
-            });
-
-            $('#select-beast').selectize({});
-
             $("div#price-upload-zone").dropzone({
                 url: "/media/add?type=price",
                 acceptedFiles: ".xls,.xlsx,.csv",
@@ -497,41 +535,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             $('#price-name').val(file.name.split('.')[0]);
                         }
                     });
-                }
-            });
-
-
-            $('#select-users').selectize({
-                render: {
-                    option: function (data, escape) {
-                        return '<div>' +
-                            '<span class="image"><img src="' + data.image + '" alt=""></span>' +
-                            '<span class="title">' + escape(data.text) + '</span>' +
-                            '</div>';
-                    },
-                    item: function (data, escape) {
-                        return '<div>' +
-                            '<span class="image"><img src="' + data.image + '" alt=""></span>' +
-                            escape(data.text) +
-                            '</div>';
-                    }
-                }
-            });
-
-            $('#select-countries').selectize({
-                render: {
-                    option: function (data, escape) {
-                        return '<div>' +
-                            '<span class="image"><img src="' + data.image + '" alt=""></span>' +
-                            '<span class="title">' + escape(data.text) + '</span>' +
-                            '</div>';
-                    },
-                    item: function (data, escape) {
-                        return '<div>' +
-                            '<span class="image"><img src="' + data.image + '" alt=""></span>' +
-                            escape(data.text) +
-                            '</div>';
-                    }
                 }
             });
         });
