@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <label class="form-label">Ссылка на файл</label>
                             <input type="text"
                                    value="<?= $model->source_type == $model::SOURCE_TYPE_LINK ? $model->path : '' ?>"
-                                   class="form-control" name="autoupdate[link]"
+                                   class="form-control" name="link"
                                    placeholder="вместе с http:// или https://">
                         </div>
                     </div>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="price-source price-source-file">
                         <input type="hidden"
                                value="<?= $model->source_type == $model::SOURCE_TYPE_LOCAL ? $model->path : '' ?>"
-                               id="price-file" name="autoupdate[file]">
+                               id="price-file" name="file">
 
                         <div id="price-upload-zone" class="file-drop drop-price">
                             <span class="hint">Переместите файл в эту зону или нажмите чтобы выбрать</span>
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="btn-list text-right m-b-10">
                                     <input type="hidden" value="0" class="condition-active" name="autoupdate[active]">
                                     <label class="custom-switch m-0">
-                                        <input type="checkbox" value="1" class="custom-switch-input" checked=""
+                                        <input type="checkbox" value="1" class="custom-switch-input"<?= $model->auto_update ? ' checked="checked"' : '' ?>
                                                name="autoupdate[active]">
                                         <span class="custom-switch-indicator"></span>
                                     </label>
@@ -113,37 +113,37 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="form-group">
                                 <div class="selectgroup selectgroup-pills">
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="mon"
+                                        <input type="checkbox" name="autoupdate[days][mon]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::MON) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">пн</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="tue"
+                                        <input type="checkbox" name="autoupdate[days][tue]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::TUE) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">вт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="wes"
+                                        <input type="checkbox" name="autoupdate[days][wes]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::WES) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">ср</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="thu"
+                                        <input type="checkbox" name="autoupdate[days][thu]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::THU) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">чт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="fri"
+                                        <input type="checkbox" name="autoupdate[days][fri]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::FRI) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">пт</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="sat"
+                                        <input type="checkbox" name="autoupdate[days][sat]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::SAT) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">сб</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="checkbox" name="autoupdate[days]" value="sun"
+                                        <input type="checkbox" name="autoupdate[days][sun]" value="1"<?= $model->checkDay(\common\helpers\DateHelper::SUN) ? ' checked="checked"' : '' ?>
                                                class="selectgroup-input">
                                         <span class="selectgroup-button">вс</span>
                                     </label>
@@ -156,17 +156,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <label class="form-label">Время обновления</label>
                                     </div>
                                     <div class="col-3">
-                                        <?= \yii\bootstrap\Html::dropDownList('autoupdate[hours]', '17', \common\helpers\DateHelper::getHoursArray(), ['class' => 'form-control custom-select']) ?>
+                                        <?= \yii\bootstrap\Html::dropDownList('autoupdate[hours]', $model->auto_update_hours, \common\helpers\DateHelper::getHoursArray(), ['class' => 'form-control custom-select']) ?>
                                     </div>
                                     <div class="col-3">
-                                        <?= \yii\bootstrap\Html::dropDownList('autoupdate[minutes]', '00', \common\helpers\DateHelper::getMinutesArray(), ['class' => 'form-control custom-select']) ?>
+                                        <?= \yii\bootstrap\Html::dropDownList('autoupdate[minutes]', $model->auto_update_minutes, \common\helpers\DateHelper::getMinutesArray(), ['class' => 'form-control custom-select']) ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-label">Если товар пропал из прайса:</div>
                                 <label class="custom-switch">
-                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                    <input type="checkbox" name="autoupdate[hide]" value="1" class="custom-switch-input"<?= $model->auto_update_hide ? ' checked="checked"' : '' ?>>
                                     <span class="custom-switch-indicator"></span>
                                     <span class="custom-switch-description">Скрывать позиции</span>
                                 </label>

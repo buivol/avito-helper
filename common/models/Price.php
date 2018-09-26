@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\DateHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -21,6 +22,11 @@ use yii\behaviors\TimestampBehavior;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ * @property int $auto_update
+ * @property int $auto_update_days
+ * @property int $auto_update_hours
+ * @property int $auto_update_minutes
+ * @property int $auto_update_hide
  *
  * @property PriceUpdate $lastUpdate
  * @property Provider $provider
@@ -57,6 +63,47 @@ class Price extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public function loadAutoUpdateParams($array)
+    {
+        $active = $this->source_type == self::SOURCE_TYPE_LINK;
+
+        $bits = 0;
+        if(isset($array['days']['mon']) && $array['days']['mon']){
+            $bits += DateHelper::MON;
+        }
+        if(isset($array['days']['tue']) && $array['days']['tue']){
+            $bits += DateHelper::TUE;
+        }
+        if(isset($array['days']['wes']) && $array['days']['wes']){
+            $bits += DateHelper::WES;
+        }
+        if(isset($array['days']['thu']) && $array['days']['thu']){
+            $bits += DateHelper::THU;
+        }
+        if(isset($array['days']['fri']) && $array['days']['fri']){
+            $bits += DateHelper::FRI;
+        }
+        if(isset($array['days']['sat']) && $array['days']['sat']){
+            $bits += DateHelper::SAT;
+        }
+        if(isset($array['days']['sun']) && $array['days']['sun']){
+            $bits += DateHelper::SUN;
+        }
+        $active = $bits && $active && isset($array['active']) && $array['active'];
+
+        $this->auto_update = $active;
+        $this->auto_update_days = $bits;
+        $this->auto_update_hours = intval($array['hours']);
+        $this->auto_update_minutes = intval($array['minutes']);
+        $this->auto_update_hide = isset($array['hide']) && $array['hide'];
+
+    }
+
+    public function checkDay($flag)
+    {
+        return (($this->auto_update_days & $flag) == $flag);
     }
 
     public function getLastUpdate()

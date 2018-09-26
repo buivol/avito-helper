@@ -39,10 +39,59 @@ class PriceController extends BackendController
     public function actionSave()
     {
         $ui = new UIRender(1, '/provider');
-        $ui->addError('тестовая ошибка 1');
-        $ui->addError('тестовая ошибка 2');
-        $ui->addError('тестовая ошибка 3');
-        $ui->addError('тестовая ошибка 4', 'parser');
+        $post = Yii::$app->request->post();
+        if ($post['id'] == 'new') {
+            $price = new Price;
+            $price->provider_id = $post['provider'];
+            $provider = Provider::findOne(['user_id' => $this->user->id, 'id' => $post['provider']]);
+            if (!$provider) {
+                $ui->addError('Ошибка связи прайса с поставщиком');
+            }
+            $price->user_id = $this->user->id;
+            if (!strlen($post['name'])) {
+                $ui->addError('Укажите название прайса');
+            }
+        } else {
+            $price = Price::findOne(['id' => $post['id'], 'user_id' => $this->user->id]);
+            if (!$price) {
+                $ui->addError('Прайс не найден');
+                return $ui->run();
+            }
+        }
+
+        $source = $post['source'];
+        if ($source == 'link') {
+            if ($price->isNewRecord && !strlen($post['link'])) {
+                $ui->addError('Введите ссылку на файл');
+            } else if (strlen($post['link'])) {
+                $price->path = $post['link'];
+                $price->source_type = Price::SOURCE_TYPE_LINK;
+            }
+        } else if ($source == 'file') {
+            if ($price->isNewRecord && !strlen($post['file'])) {
+                $ui->addError('Загрузите файл');
+            } else if (strlen($post['file'])) {
+                $price->path = $post['file'];
+                $price->source_type = Price::SOURCE_TYPE_LOCAL;
+            }
+        } else if ($source == 'ftp') {
+            $ui->addError('Данный вид загрузки пока не поддерживатся');
+        } else if ($source == 'mail') {
+            $ui->addError('Данный вид загрузки пока не поддерживатся');
+        } else {
+            $ui->addError('Данный вид загрузки пока не поддерживатся');
+        }
+
+        if (strlen($post['name'])) {
+            $price->name = $post['name'];
+        }
+
+        $price->loadAutoUpdateParams($post['autoupdate']);
+
+        if (!$ui->isError()) {
+            $price->save();
+        }
+
         return $ui->run();
     }
 
@@ -55,7 +104,7 @@ class PriceController extends BackendController
      */
     protected function findModel($id)
     {
-        if (($model = Price::findOne($id)) !== null) {
+        if (($model = Price::findOne(['id' => $id, 'user_id' => $this->user->id])) !== null) {
             return $model;
         }
 

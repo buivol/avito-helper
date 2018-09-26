@@ -11,6 +11,15 @@ namespace common\helpers;
 
 class DateHelper
 {
+    const MON = 2;
+    const TUE = 4;
+    const WES = 8;
+    const THU = 16;
+    const FRI = 32;
+    const SAT = 64;
+    const SUN = 128;
+
+
     /**
      * Функция склонения числительных в русском языке 1, 3, 5
      *
