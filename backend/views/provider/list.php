@@ -35,19 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-8">
         <div class="card">
             <div class="card-header">
-                <div class="card-title">Список прайсов</div>
-                <div class="card-options" style="display: none;">
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" placeholder="Поиск"
-                                   name="s">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default" type="submit">
-                                    <span class="fe fe-search"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                Список прайсов
+                <div class="card-options">
+                    <a href="/price/new?provider=1" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
                 </div>
             </div>
             <div class="table-responsive">

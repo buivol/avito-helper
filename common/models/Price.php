@@ -31,6 +31,8 @@ class Price extends \yii\db\ActiveRecord
 
     const SOURCE_TYPE_LOCAL = 1;
     const SOURCE_TYPE_LINK = 2;
+    const SOURCE_TYPE_FTP = 3;
+    const SOURCE_TYPE_EMAIL = 4;
 
     const TYPE_XLS = 1;
     const TYPE_CSV = 2;

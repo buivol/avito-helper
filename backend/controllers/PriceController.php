@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\helpers\UIRender;
 use common\models\Price;
 use common\models\Provider;
 use Yii;
@@ -18,6 +19,31 @@ class PriceController extends BackendController
         $this->saveButton = 'Сохранить';
         $model = $this->findModel($id);
         return $this->render('view', ['model' => $model]);
+    }
+
+    public function actionNew($provider)
+    {
+        $provider = Provider::findOne(['id' => $provider, 'user_id' => $this->user->id]);
+        if (!$provider) {
+            return $this->goBack('/provider');
+        }
+        $this->backButton = '/provider';
+        $this->saveButton = 'Добавить';
+        $model = new Price;
+        $model->provider_id = $provider->id;
+        $model->source_type = Price::SOURCE_TYPE_LOCAL;
+
+        return $this->render('view', ['model' => $model]);
+    }
+
+    public function actionSave()
+    {
+        $ui = new UIRender(1, '/provider');
+        $ui->addError('тестовая ошибка 1');
+        $ui->addError('тестовая ошибка 2');
+        $ui->addError('тестовая ошибка 3');
+        $ui->addError('тестовая ошибка 4', 'parser');
+        return $ui->run();
     }
 
     /**

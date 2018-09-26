@@ -14,38 +14,42 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3><?= $model->name ?></h3>
 <div class="row row-cards">
 
-    <div class="col-sm-4">
-        <div class="card">
+    <div class="col-sm-<?= $model->isNewRecord ? 6 : 4 ?>">
+        <div class="card" data-ui="main">
             <div class="card-header">Загрузить новый файл</div>
-            <div id="price-error" class="card-alert alert alert-danger mb-0" style="display: none;">
-                Неизвестная ошибка
-            </div>
             <div class="card-body">
                 <form id="price-main">
+                    <input type="hidden" name="provider" value="<?= $model->provider_id ?>">
+                    <input type="hidden" name="id" id="price-id"
+                           value="<?= $model->isNewRecord ? 'new' : $model->id ?>">
                     <div class="form-group">
                         <label class="form-label">Название прайса</label>
-                        <input type="text" class="form-control" id="price-name" name="title" placeholder="Придумайте название">
+                        <input type="text" class="form-control" id="price-name" value="<?= $model->name ?>" name="name"
+                               placeholder="Придумайте название">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Источник</label>
                         <div class="selectgroup w-100">
                             <label class="selectgroup-item">
-                                <input type="radio" name="source" value="link" class="selectgroup-input">
+                                <input type="radio" name="source" value="link"
+                                       class="selectgroup-input" <?= $model->source_type == $model::SOURCE_TYPE_LINK ? 'checked="checked"' : '' ?>>
                                 <span class="selectgroup-button selectgroup-button-icon"><i
                                             class="fe fe-link"></i></span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="source" value="ftp" class="selectgroup-input">
+                                <input type="radio" name="source" value="ftp"
+                                       class="selectgroup-input" <?= $model->source_type == $model::SOURCE_TYPE_FTP ? 'checked="checked"' : '' ?>>
                                 <span class="selectgroup-button selectgroup-button-icon">FTP</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="source" value="file" class="selectgroup-input"
-                                       checked="checked">
+                                <input type="radio" name="source" value="file"
+                                       class="selectgroup-input" <?= $model->source_type == $model::SOURCE_TYPE_LOCAL ? 'checked="checked"' : '' ?>>
                                 <span class="selectgroup-button selectgroup-button-icon"><i
                                             class="fe fe-upload"></i></span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="source" value="mail" class="selectgroup-input">
+                                <input type="radio" name="source" value="mail"
+                                       class="selectgroup-input" <?= $model->source_type == $model::SOURCE_TYPE_EMAIL ? 'checked="checked"' : '' ?>>
                                 <span class="selectgroup-button selectgroup-button-icon"><i
                                             class="fe fe-mail"></i></span>
                             </label>
@@ -59,7 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="price-source price-source-link">
                         <div class="form-group">
                             <label class="form-label">Ссылка на файл</label>
-                            <input type="text" class="form-control" name="autoupdate[link]"
+                            <input type="text"
+                                   value="<?= $model->source_type == $model::SOURCE_TYPE_LINK ? $model->path : '' ?>"
+                                   class="form-control" name="autoupdate[link]"
                                    placeholder="вместе с http:// или https://">
                         </div>
                     </div>
@@ -71,7 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="price-source price-source-file">
-                        <input type="hidden" id="price-file" name="autoupdate[file]">
+                        <input type="hidden"
+                               value="<?= $model->source_type == $model::SOURCE_TYPE_LOCAL ? $model->path : '' ?>"
+                               id="price-file" name="autoupdate[file]">
 
                         <div id="price-upload-zone" class="file-drop drop-price">
                             <span class="hint">Переместите файл в эту зону или нажмите чтобы выбрать</span>
@@ -170,9 +178,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-<?= $model->isNewRecord ? 6 : 4 ?>">
 
-        <div class="card">
+        <div class="card" data-ui="parser">
             <div class="card-header">Настройки парсера</div>
             <div class="card-body">
 
@@ -331,39 +339,42 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-header">
-                <div>История обновлений</div>
-                <div class="card-options">
-                    <small>(последние 30)</small>
-                </div>
 
-            </div>
-            <div class="table-responsive">
-                <table class="table card-table table-striped table-vcenter">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Время</th>
-                        <th>Сообщение</th>
-                        <th>Статус</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($model->getUpdates()->limit(30)->all() as $update): ?>
+    <?php if (!$model->isNewRecord): ?>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <div>История обновлений</div>
+                    <div class="card-options">
+                        <small>(последние 30)</small>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table card-table table-striped table-vcenter">
+                        <thead>
                         <tr>
-                            <td><?= $update->id ?></td>
-                            <td class="text-nowrap"><?= $update->humanTime ?></td>
-                            <td><?= $update->message ?></td>
-                            <td><span class="badge <?= $update->statusBadge ?>"><?= $update->status ?></span></td>
+                            <th>ID</th>
+                            <th>Время</th>
+                            <th>Сообщение</th>
+                            <th>Статус</th>
                         </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($model->getUpdates()->limit(30)->all() as $update): ?>
+                            <tr>
+                                <td><?= $update->id ?></td>
+                                <td class="text-nowrap"><?= $update->humanTime ?></td>
+                                <td><?= $update->message ?></td>
+                                <td><span class="badge <?= $update->statusBadge ?>"><?= $update->status ?></span></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 
 
 </div>
@@ -442,22 +453,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 parserConditionsRefresh();
             });
 
-            function viewError(text)
-            {
-                var $error = $("#price-error");
-                $error.html(text);
-                $error.show(0);
-                $('html, body').animate({scrollTop: $error.offset().top}, 700);
-            }
 
             $('#save').on('click', function (e) {
                 e.preventDefault();
-                $("#price-error").hide(0);
-                var dataParser = $('#parser-conditions').serialize();
-                var dataMain = $('#price-main').serialize();
-                var data = dataMain + '&' + dataParser;
-                console.log(data);
-                viewError('test error');
+                ui.post('/price/save', ['#parser-conditions', '#price-main']);
             });
 
             $('#input-tags').selectize({
@@ -483,14 +482,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     this.on("complete", function (file) {
                         console.log('uploaded', file.name, file.xhr.response);
                         $('#price-file').val(file.xhr.response);
-                        if($('#price-name').val().length < 1){
+                        if ($('#price-name').val().length < 1) {
                             $('#price-name').val(file.name.split('.')[0]);
                         }
                     });
                 }
             });
-
-
 
 
             $('#select-users').selectize({

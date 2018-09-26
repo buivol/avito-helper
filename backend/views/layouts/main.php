@@ -42,30 +42,8 @@ AppAsset::register($this);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-    <script src="/v1/dist/assets/js/require.min.js"></script>
-    <script>
-        requirejs.config({
-            baseUrl: '/v1/dist/',
-            shim: {
-                'bootstrap': ['jquery'],
-                'sparkline': ['jquery'],
-                'tablesorter': ['jquery'],
-                'core': ['bootstrap', 'jquery'],
-            },
-            paths: {
-                'core': 'assets/js/core',
-                'jquery': 'assets/js/vendors/jquery-3.2.1.min',
-                'bootstrap': 'assets/js/vendors/bootstrap.bundle.min',
-                'sparkline': 'assets/js/vendors/jquery.sparkline.min',
-                'selectize': 'assets/js/vendors/selectize.min',
-                'tablesorter': 'assets/js/vendors/jquery.tablesorter.min',
-                'circle-progress': 'assets/js/vendors/circle-progress.min',
-                'dropzone': 'assets/js/dropzone',
-            }
-        });
-        require(['core']);
-    </script>
-
+    <script src="/v1/dist/assets/js/vendors/require.min.js"></script>
+    <script src="/v1/dist/assets/js/dashboard.js"></script>
     <link href="/v1/dist/assets/css/dashboard.css" rel="stylesheet"/>
     <link href="/v1/dist/dropzone.css" rel="stylesheet"/>
     <script src="/v1/dist/assets/plugins/input-mask/plugin.js"></script>

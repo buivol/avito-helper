@@ -3,7 +3,9 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     autoprefixer = require('gulp-autoprefixer'),
     rtlcss = require('gulp-rtlcss'),
-    pckg = require('./package.json');
+    pckg = require('./package.json'),
+	gutil = require('gulp-util'),
+	babel = require('gulp-babel');
 
 gulp.task('styles', function () {
     return gulp.src('src/assets/scss/bundle.scss', { base: '.' })
@@ -21,6 +23,14 @@ gulp.task('styles', function () {
         .pipe(rtlcss())
         .pipe(rename('dashboard.rtl.css'))
         .pipe(gulp.dest('src/assets/css/'));
+});
+
+gulp.task('scripts', function () {
+	return gulp.src('src/assets/js/*.js')
+		.pipe(babel({
+			presets: ['@babel/env']
+		}).on('error', gutil.log))
+		.pipe(gulp.dest('dist/assets/js/'));
 });
 
 gulp.task('styles-plugins', function () {
@@ -44,6 +54,6 @@ gulp.task('watch', ['styles', 'styles-plugins'], function() {
     gulp.watch('src/assets/plugins/**/*.scss', ['styles-plugins']);
 });
 
-gulp.task('build', ['styles', 'styles-plugins']);
+gulp.task('build', ['styles', 'styles-plugins', 'scripts']);
 
 gulp.task('default', ['build']);
