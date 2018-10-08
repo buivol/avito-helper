@@ -96,6 +96,16 @@ class PriceController extends BackendController
         return $ui->run();
     }
 
+
+    public function actionForceupdate($id)
+    {
+        $model = Price::findOne(['id' => $id, 'user_id' => $this->user->id]);
+        $ui = new UIRender();
+        $ui->addError('Ошибка при обновлении "' . $model->name . '". Обновление временно недоступно', 'prices');
+        $ui->setId($model->provider_id);
+        return $ui->run();
+    }
+
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

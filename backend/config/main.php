@@ -61,6 +61,7 @@ return [
                 'login' => 'site/login',
                 '' => 'site/index',
                 '<controller:\w+>/<id:\d+>/' => '<controller>/view',
+                'POST api/<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
 
 

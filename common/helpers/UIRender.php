@@ -19,6 +19,7 @@ class UIRender
     private $successRedirect = '/';
     private $message = '';
     private $needRedirect = false;
+    private $entityId = null;
 
 
     /**
@@ -54,6 +55,16 @@ class UIRender
     }
 
     /**
+     * @param $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->entityId = $id;
+        return $this;
+    }
+
+    /**
      * @param string $text
      */
     public function showMessage($text)
@@ -72,6 +83,7 @@ class UIRender
             'needRedirect' => !$this->error ? $this->needRedirect : false,
             'redirect' => $this->successRedirect,
             'errors' => $this->errors,
+            'entityId' => $this->entityId ?? 0,
         ];
 
         return Json::encode($result);

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-3">
             <div class="card card-profile">
                 <div class="card-header"
-                     style="background-image: url(http://www.bonanzacom.ru/templates/images/logo.png); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
+                     style="background-image: url(http://placekitten.com/450/200); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
                 <div class="card-body text-center">
                     <h2 class="mb-3"><?= $provider->title ?></h2>
                     <p class="mb-4">
@@ -36,14 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
         <div class="col-sm-9">
-            <div class="card">
+            <div class="card" data-ui="prices" data-id="<?= $provider->id ?>">
                 <div class="card-header">
                     Список прайсов
                     <div class="card-options">
                         <a href="/price/new?provider=1" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
                     </div>
                 </div>
-                <div class="table-responsive">
+                <div class="c-body table-responsive">
                     <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                         <thead>
                         <tr>
@@ -117,7 +117,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <a href="/price/<?= $price->id ?>" class="dropdown-item"><i
                                                         class="dropdown-icon fe fe-edit-2"></i> Настроить</a>
                                             <?php if ($price->isForceUpdate()): ?>
-                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                <a href="#" data-id="<?= $price->id ?>"
+                                                   data-provider-id="<?= $price->provider_id ?>"
+                                                   class="price-action-force-update dropdown-item"><i
                                                             class="dropdown-icon fe fe-repeat"></i> Обновить сейчас</a>
                                             <?php endif; ?>
                                             <?php if ($price->isActive()): ?>
@@ -160,6 +162,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 success: {title: 'Прайс отключен', message: 'Включить его вы сможете на этой странице в любое время'},
                 onsuccess: function () {
                     //ajax off
+                },
+                cancel: false,
+            })
+        })
+
+        $('.price-action-force-update').on('click', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id'),
+                providerId = $(this).data('provider-id');
+            ui.question({
+                title: 'Обновить прайс?',
+                message: '',
+                yes: 'Да',
+                no: 'Нет',
+                success: {title: 'Обновление запланировано', message: 'Прайс будет обновлен в ближайшее время'},
+                onsuccess: function () {
+                    ui.api({url: 'price/' + id + '/forceupdate', eid: providerId});
                 },
                 cancel: false,
             })

@@ -55,7 +55,41 @@ class UIRender {
 
 	}
 
-	error(block, message) {
+	api({url, data = false, success = false, error = false, method = "post", block = "", eid = 0}) {
+		$('.ui-error').hide(0);
+		data = data ? data : {};
+		const requestData = {[this.param]: this.token, ...data};
+		$.ajax({
+			type: method,
+			url: '/api/' + url,
+			data: requestData,
+			success: (msg) => {
+				if (success !== false) {
+					success(msg);
+				}
+				const response = JSON.parse(msg);
+				if (response.status === 'ok') {
+					if (response.needRedirect) {
+						window.location.href = response.redirect;
+					}
+				} else if (response.status === 'error') {
+					$.each(response.errors, (block, errors) => {
+						this.error(block, errors, eid);
+					});
+				}
+			},
+			error: (jqXHR, exception) => {
+				let msg = jqXHR.responseText;
+				if (error) {
+					error(msg);
+				} else {
+					this.error(block, msg, eid);
+				}
+			}
+		});
+	}
+
+	error(block = '', message = 'Ошибка', eid = 0) {
 		let messageHtml = '';
 
 		if (Array.isArray(message)) {
@@ -72,23 +106,32 @@ class UIRender {
 			messageHtml = message;
 		}
 
-		let id = 'ui-block-' + block;
+		let id = 'ui-block-' + block + '-' + eid;
 		let $b = $('#' + id);
 		if (!$b.length) {
-			let h = '<div id="' + id + '"class="ui-error card-alert alert alert-danger mb-0" style="display: block;">';
+			let h = '<div id="' + id + '"class="ui-error card-alert alert alert-danger mb-0" style="display:block;">';
 			h += messageHtml;
 			h += '</div>';
-			let $card = $('.card[data-ui="' + block + '"]');
+			let $card = null;
+			if (eid) {
+				$card = $('.card[data-ui="' + block + '"]');
+			} else {
+				$card = $('.card[data-ui="' + block + '"][data-id="' + eid + '"]');
+			}
 			if ($card.length) {
-				$card.find('.card-body').before(h);
+				let $cardBody = $card.find('.card-body');
+				if (!$cardBody.length) {
+					$cardBody = $card.find('.c-body');
+				}
+				$cardBody.before(h);
 				$('html, body').animate({scrollTop: $('#' + id).offset().top}, 700);
 			} else {
-				$card = $('.card')[0];
+				const $card = $('.card:first');
 				if ($card.length) {
 					$card.find('.card-body').before(h);
 					$('html, body').animate({scrollTop: $('#' + id).offset().top}, 700);
 				} else {
-					console.log('ui: any cards not found');
+					this.alert(messageHtml)
 				}
 			}
 		} else {
@@ -99,7 +142,6 @@ class UIRender {
 	}
 
 	question({title = 'Подтверждение', yes = 'Да, сделать это', no = 'Нет, отменить', message = 'Вы уверены, что хотите это сделать', success = false, onsuccess = false, cancel = false, oncancel = false}) {
-		console.log();
 		this.sa({
 			title: title,
 			text: message,
@@ -111,8 +153,11 @@ class UIRender {
 		}).then((result) => {
 			if (result.value) {
 				let successTitle = 'Готово',
-					successMessage = 'Это сделано'
-				if(success !== false) {
+					successMessage = 'Это сделано';
+				if (onsuccess !== false) {
+					onsuccess();
+				}
+				if (success !== false) {
 					successTitle = (typeof success.title !== 'undefined') ? success.title : successTitle;
 					successMessage = (typeof success.message !== 'undefined') ? success.message : successMessage;
 					this.sa(
@@ -120,14 +165,8 @@ class UIRender {
 						successMessage,
 						'success'
 					).then((res) => {
-						if(onsuccess !== false){
-							onsuccess();
-						}
+
 					})
-				} else {
-					if(onsuccess !== false){
-						onsuccess();
-					}
 				}
 
 			} else if (
@@ -136,7 +175,7 @@ class UIRender {
 			) {
 				let cancelTitle = 'Отменено',
 					cancelMessage = 'Действие не было выполнено'
-				if(cancel !== false) {
+				if (cancel !== false) {
 					cancelTitle = (typeof cancel.title !== 'undefined') ? cancel.title : cancelTitle;
 					cancelMessage = (typeof cancel.message !== 'undefined') ? cancel.message : cancelMessage;
 					this.sa(
