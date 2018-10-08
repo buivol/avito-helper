@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-header">
                     Список прайсов
                     <div class="card-options">
-                        <a href="/price/new?provider=1" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
+                        <a href="/price/new?provider=<?= $provider->id ?>" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
                     </div>
                 </div>
                 <div class="c-body table-responsive">
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <span class="avatar-status bg-<?= $price->isActive() ? 'green' : 'red' ?>"></span>
                             </span>
                                 </td>
-                                <td>
+                                <td class="ui-nav" data-href="/price/<?= $price->id ?>">
                                     <div><?= $price->name ?></div>
                                     <div class="small text-muted">
                                         <?= $price->humanType ?><?= $price->auto_update ? ', автообновление' : '' ?>

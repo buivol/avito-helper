@@ -25,6 +25,14 @@ function () {
       cancelButtonClass: 'btn btn-lg btn-link',
       buttonsStyling: false
     });
+    $('.ui-nav').css('cursor', 'pointer').on('click', function (e) {
+      e.preventDefault();
+      var href = $(this).data('href');
+
+      if (href.length) {
+        window.location.href = href;
+      }
+    });
     this.param = $('meta[name=csrf-param]').attr('content');
     this.token = $('meta[name=csrf-token]').attr('content');
   }

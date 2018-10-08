@@ -7,8 +7,15 @@ class UIRender {
 		this.sa = sa.mixin({
 			confirmButtonClass: 'btn btn-lg btn-primary',
 			cancelButtonClass: 'btn btn-lg btn-link',
-			buttonsStyling: false,
-		})
+			buttonsStyling: false
+		});
+		$('.ui-nav').css('cursor', 'pointer').on('click', function (e) {
+			e.preventDefault();
+			let href = $(this).data('href');
+			if (href.length) {
+				window.location.href = href;
+			}
+		});
 		this.param = $('meta[name=csrf-param]').attr('content');
 		this.token = $('meta[name=csrf-token]').attr('content');
 
