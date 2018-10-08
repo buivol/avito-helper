@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     rtlcss = require('gulp-rtlcss'),
     pckg = require('./package.json'),
 	gutil = require('gulp-util'),
+	browserify = require('gulp-browserify'),
 	babel = require('gulp-babel');
 
 gulp.task('styles', function () {

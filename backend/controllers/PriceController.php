@@ -38,7 +38,7 @@ class PriceController extends BackendController
 
     public function actionSave()
     {
-        $ui = new UIRender(0, '/provider');
+        $ui = new UIRender(1, '/provider');
         $post = Yii::$app->request->post();
         if ($post['id'] == 'new') {
             $price = new Price;
@@ -87,7 +87,7 @@ class PriceController extends BackendController
         }
 
         $price->loadAutoUpdateParams($post['autoupdate']);
-        $price->loadParserParams($post['parser'], $post['condition']);
+        $price->loadParserParams($post['parser'], isset($post['condition']) ? $post['condition'] : []);
 
         if (!$ui->isError()) {
             $price->save();

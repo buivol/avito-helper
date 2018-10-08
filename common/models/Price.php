@@ -33,6 +33,7 @@ use yii\helpers\Json;
  * @property Provider $provider
  * @property PriceUpdate[] $updates
  * @property array $conditions
+ * @property string $humanType
  */
 class Price extends \yii\db\ActiveRecord
 {
@@ -42,6 +43,7 @@ class Price extends \yii\db\ActiveRecord
     const SOURCE_TYPE_FTP = 3;
     const SOURCE_TYPE_EMAIL = 4;
 
+    const TYPE_UNKNOWN = 0;
     const TYPE_XLS = 1;
     const TYPE_CSV = 2;
 
@@ -144,6 +146,24 @@ class Price extends \yii\db\ActiveRecord
         return $conditions;
     }
 
+    public function getHumanType()
+    {
+        return [
+            self::TYPE_UNKNOWN => 'Неизвестный',
+            self::TYPE_CSV => 'Csv',
+            self::TYPE_XLS => 'Excel',
+        ][$this->type ? $this->type : self::TYPE_UNKNOWN];
+    }
+
+    public function isForceUpdate()
+    {
+        return ($this->source_type == self::SOURCE_TYPE_LINK);
+    }
+
+    public function isActive()
+    {
+        return ($this->status == self::STATUS_ACTIVE);
+    }
 
     public function checkDay($flag)
     {

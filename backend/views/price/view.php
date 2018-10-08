@@ -441,7 +441,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <script>
-    require(['jquery', 'bootstrap', 'dropzone'], function ($) {
+    require(['jquery', 'bootstrap', 'dropzone'], function ($, b, d) {
         $(document).ready(function () {
 
             console.log('init');

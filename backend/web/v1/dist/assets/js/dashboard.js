@@ -6,7 +6,11 @@ requirejs.config({
     'bootstrap': ['jquery'],
     'sparkline': ['jquery'],
     'tablesorter': ['jquery'],
-    'core': ['bootstrap', 'jquery', 'ui']
+    'ui': ['sa'],
+    'sa': {
+      exports: 'swal'
+    },
+    'core': ['bootstrap', 'jquery', 'sa', 'ui']
   },
   paths: {
     'core': 'assets/js/core',
@@ -17,6 +21,7 @@ requirejs.config({
     'tablesorter': 'assets/js/vendors/jquery.tablesorter.min',
     'circle-progress': 'assets/js/vendors/circle-progress.min',
     'dropzone': 'assets/js/vendors/dropzone',
+    'sa': 'assets/sa',
     'ui': 'assets/js/ui'
   }
 });

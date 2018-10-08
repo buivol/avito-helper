@@ -12,102 +12,136 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="row row-cards">
-    <div class="col-sm-4">
-        <div class="card card-profile">
-            <div class="card-header"
-                 style="background-image: url(http://www.bonanzacom.ru/templates/images/logo.png); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
-            <div class="card-body text-center">
-                <h2 class="mb-3">Bonanza</h2>
-                <p class="mb-4">
-                    Tel.: +7 (495) 780 58 20<br>
-                    E-mail: <a href="mailto:info@bonanzacom.ru">info@bonanzacom.ru</a><br>
-                    <a href="http://www.bonanzacom.ru" target="_blank">www.bonanzacom.ru</a>
-                </p>
-                <button class="btn btn-outline-default btn-sm">
-                    <span class="fa fa-pencil"></span> Настроить
-                </button>
-            </div>
-        </div>
-    </div>
 
+<?php foreach ($items as $provider): ?>
 
-    <div class="col-sm-8">
-        <div class="card">
-            <div class="card-header">
-                Список прайсов
-                <div class="card-options">
-                    <a href="/price/new?provider=1" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
+    <div class="row row-cards">
+        <div class="col-sm-3">
+            <div class="card card-profile">
+                <div class="card-header"
+                     style="background-image: url(http://www.bonanzacom.ru/templates/images/logo.png); background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
+                <div class="card-body text-center">
+                    <h2 class="mb-3"><?= $provider->title ?></h2>
+                    <p class="mb-4">
+                        Tel.: +7 (495) 780 58 20<br>
+                        E-mail: <a href="mailto:info@bonanzacom.ru">info@bonanzacom.ru</a><br>
+                        <a href="http://www.bonanzacom.ru" target="_blank">www.bonanzacom.ru</a>
+                    </p>
+                    <button class="btn btn-outline-default btn-sm">
+                        <span class="fa fa-pencil"></span> Настроить
+                    </button>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
-                    <thead>
-                    <tr>
-                        <th class="text-center w-1"></th>
-                        <th>Название</th>
-                        <th>Парсер контента</th>
-                        <th class="text-center">Источник</th>
-                        <th>Обновление</th>
-                        <th class="text-center">Запланировано</th>
-                        <th class="text-center"><i class="icon-settings"></i></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="text-center">
+        </div>
+
+
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-header">
+                    Список прайсов
+                    <div class="card-options">
+                        <a href="/price/new?provider=1" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                        <thead>
+                        <tr>
+                            <th class="text-center w-1"></th>
+                            <th>Название</th>
+                            <th>Парсер контента</th>
+                            <th class="text-center">Источник</th>
+                            <th>Обновление</th>
+                            <th class="text-center">План</th>
+                            <th class="text-center"><i class="icon-settings"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <?php foreach ($provider->prices as $price): ?>
+                            <tr>
+                                <td class="text-center">
                             <span class="avatar"><i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="avatar-status bg-green"></span>
+                                <span class="avatar-status bg-<?= $price->isActive() ? 'green' : 'red' ?>"></span>
                             </span>
-                        </td>
-                        <td>
-                            <div>HI-END Premium</div>
-                            <div class="small text-muted">
-                                1.24 мб, Excell
-                            </div>
-                        </td>
-                        <td>
-                            <div class="clearfix">
-                                <div class="float-left">
-                                    <strong>42%</strong>
-                                </div>
-                                <div class="float-right">
-                                    <small class="text-muted">76 из 210</small>
-                                </div>
-                            </div>
-                            <div class="progress progress-xs">
-                                <div class="progress-bar bg-yellow" role="progressbar" style="width: 42%"
-                                     aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <i class="fa fa-cloud" style="padding-top: 10px;"></i>
-                        </td>
-                        <td>
-                            <div class="small text-muted">Успешно</div>
-                            <div>4 минуты назад</div>
-                        </td>
-                        <td class="text-center">
-                            <div class="mx-auto chart-circle chart-circle-xs" data-value="0.42" data-thickness="3"
-                                 data-color="blue">
-                                <canvas width="80" height="80" style="height: 40px; width: 40px;"></canvas>
-                                <div class="chart-circle-value">42%</div>
-                            </div>
-                        </td>
-                        <td class="text-center btn-p">
-                            <a class="icon" href="/price/1">
-                                <i class="fe fe-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td>
+                                    <div><?= $price->name ?></div>
+                                    <div class="small text-muted">
+                                        <?= $price->humanType ?><?= $price->auto_update ? ', автообновление' : '' ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="clearfix">
+                                        <div class="float-left">
+                                            <strong>42%</strong>
+                                        </div>
+                                        <div class="float-right">
+                                            <small class="text-muted">76 из 210</small>
+                                        </div>
+                                    </div>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar bg-yellow" role="progressbar" style="width: 42%"
+                                             aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <?php if ($price->source_type == \common\models\Price::SOURCE_TYPE_LINK): ?>
+                                        <i class="fe fe-link" style="padding-top: 10px;"></i>
+                                    <?php endif; ?>
+                                    <?php if ($price->source_type == \common\models\Price::SOURCE_TYPE_LOCAL): ?>
+                                        <i class="fe fe-upload" style="padding-top: 10px;"></i>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if ($price->lastUpdate): ?>
+                                        <div class="small text-muted"><?= $price->lastUpdate->status ?></div>
+                                        <div><?= $price->lastUpdate->humanTime ?></div>
+                                    <?php else: ?>
+                                        <div class="small text-muted">Еще не было</div>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="text-center">
+                                    <div class="mx-auto chart-circle chart-circle-xs" data-value="0.42"
+                                         data-thickness="3"
+                                         data-color="blue">
+                                        <canvas width="80" height="80" style="height: 40px; width: 40px;"></canvas>
+                                        <div class="chart-circle-value">42%</div>
+                                    </div>
+                                </td>
+                                <td class="text-center btn-p">
+                                    <div class="item-action dropdown">
+                                        <a href="javascript:void(0)" data-toggle="dropdown" class="icon"
+                                           aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="/price/<?= $price->id ?>" class="dropdown-item"><i
+                                                        class="dropdown-icon fe fe-edit-2"></i> Настроить</a>
+                                            <?php if ($price->isForceUpdate()): ?>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                            class="dropdown-icon fe fe-repeat"></i> Обновить сейчас</a>
+                                            <?php endif; ?>
+                                            <?php if ($price->isActive()): ?>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                            class="dropdown-icon fe fe-pause"></i> Отключить</a>
+                                            <?php else: ?>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                            class="dropdown-icon fe fe-play"></i> Включить</a>
+                                            <?php endif; ?>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="javascript:void(0)" class="dropdown-item"><i
+                                                        class="dropdown-icon fe fe-trash-2"></i> Удалить</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-
-
+<?php endforeach; ?>
 

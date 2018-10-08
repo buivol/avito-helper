@@ -1,10 +1,17 @@
 /*jshint esversion: 6 */
 
+
 class UIRender {
-	constructor(saveBtn = '#save') {
+	constructor(sa, saveBtn = '#save') {
 		this.saveBtn = $(saveBtn);
+		this.sa = sa.mixin({
+			confirmButtonClass: 'btn btn-lg btn-primary',
+			cancelButtonClass: 'btn btn-lg btn-link',
+			buttonsStyling: false,
+		})
 		this.param = $('meta[name=csrf-param]').attr('content');
 		this.token = $('meta[name=csrf-token]').attr('content');
+
 	}
 
 	version() {
@@ -89,8 +96,68 @@ class UIRender {
 			$b.show(0);
 			$('html, body').animate({scrollTop: $b.offset().top}, 700);
 		}
+	}
 
+	question({title = 'Подтверждение', yes = 'Да, сделать это', no = 'Нет, отменить', message = 'Вы уверены, что хотите это сделать', success = false, onsuccess = false, error = false, onerror = false}) {
+		console.log();
+		this.sa({
+			title: title,
+			text: message,
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: yes,
+			cancelButtonText: no,
+			reverseButtons: true
+		}).then((result) => {
+			if (result.value) {
+				let successTitle = 'Готово',
+					successMessage = 'Это сделано'
+				if(success !== false) {
+					successTitle = (typeof success.title !== 'undefined') ? success.title : successTitle;
+					successMessage = (typeof success.message !== 'undefined') ? success.message : successMessage;
+				}
+				this.sa(
+					successTitle,
+					successMessage,
+					'success'
+				).then((res) => {
+					if(onsuccess !== false){
+						onsuccess();
+					}
+				})
+			} else if (
+				// Read more about handling dismissals
+				result.dismiss === this.sa.DismissReason.cancel
+			) {
+				let errorTitle = 'Отменено',
+					errorMessage = 'Действие не было выполнено'
+				if(error !== false) {
+					errorTitle = (typeof error.title !== 'undefined') ? error.title : errorTitle;
+					errorMessage = (typeof error.message !== 'undefined') ? error.message : errorMessage;
+				}
+				this.sa(
+					errorTitle,
+					errorMessage,
+					'error'
+				).then((res) => {
+					if(onerror !== false){
+						onerror();
+					}
+				})
+			}
+		});
+	}
 
+	alert(message) {
+		this.sa({
+			text: message,
+			type: 'error',
+			confirmButtonText: 'Понятно'
+		});
+	}
+
+	test(message) {
+		this.sa('Хуй пизда джигруда');
 	}
 }
 
