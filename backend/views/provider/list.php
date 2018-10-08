@@ -121,10 +121,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             class="dropdown-icon fe fe-repeat"></i> Обновить сейчас</a>
                                             <?php endif; ?>
                                             <?php if ($price->isActive()): ?>
-                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                <a href="#" data-id="<?= $price->id ?>"
+                                                   class="price-action-off dropdown-item"><i
                                                             class="dropdown-icon fe fe-pause"></i> Отключить</a>
                                             <?php else: ?>
-                                                <a href="javascript:void(0)" class="dropdown-item"><i
+                                                <a href="#" data-id="<?= $price->id ?>"
+                                                   class="price-action-on dropdown-item"><i
                                                             class="dropdown-icon fe fe-play"></i> Включить</a>
                                             <?php endif; ?>
                                             <div class="dropdown-divider"></div>
@@ -145,3 +147,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php endforeach; ?>
 
+
+<script>
+    require(['jquery', 'bootstrap'], function ($, bootstrap) {
+        $('.price-action-off').on('click', function (e) {
+            e.preventDefault();
+            ui.question({
+                title: 'Отключить прайс?',
+                message: 'Он не будет обновляться и выгружаться, а также не будет доступен в календаре',
+                yes: 'Отключить',
+                no: 'Нет',
+                success: {title: 'Прайс отключен', message: 'Включить его вы сможете на этой странице в любое время'},
+                onsuccess: function () {
+                    //ajax off
+                },
+                cancel: false,
+            })
+        })
+    });
+</script>

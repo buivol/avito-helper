@@ -150,10 +150,10 @@ function () {
           success = _ref$success === void 0 ? false : _ref$success,
           _ref$onsuccess = _ref.onsuccess,
           onsuccess = _ref$onsuccess === void 0 ? false : _ref$onsuccess,
-          _ref$error = _ref.error,
-          error = _ref$error === void 0 ? false : _ref$error,
-          _ref$onerror = _ref.onerror,
-          onerror = _ref$onerror === void 0 ? false : _ref$onerror;
+          _ref$cancel = _ref.cancel,
+          cancel = _ref$cancel === void 0 ? false : _ref$cancel,
+          _ref$oncancel = _ref.oncancel,
+          oncancel = _ref$oncancel === void 0 ? false : _ref$oncancel;
       console.log();
       this.sa({
         title: title,
@@ -171,28 +171,36 @@ function () {
           if (success !== false) {
             successTitle = typeof success.title !== 'undefined' ? success.title : successTitle;
             successMessage = typeof success.message !== 'undefined' ? success.message : successMessage;
-          }
 
-          _this2.sa(successTitle, successMessage, 'success').then(function (res) {
+            _this2.sa(successTitle, successMessage, 'success').then(function (res) {
+              if (onsuccess !== false) {
+                onsuccess();
+              }
+            });
+          } else {
             if (onsuccess !== false) {
               onsuccess();
             }
-          });
+          }
         } else if ( // Read more about handling dismissals
         result.dismiss === _this2.sa.DismissReason.cancel) {
-          var errorTitle = 'Отменено',
-              errorMessage = 'Действие не было выполнено';
+          var cancelTitle = 'Отменено',
+              cancelMessage = 'Действие не было выполнено';
 
-          if (error !== false) {
-            errorTitle = typeof error.title !== 'undefined' ? error.title : errorTitle;
-            errorMessage = typeof error.message !== 'undefined' ? error.message : errorMessage;
-          }
+          if (cancel !== false) {
+            cancelTitle = typeof cancel.title !== 'undefined' ? cancel.title : cancelTitle;
+            cancelMessage = typeof cancel.message !== 'undefined' ? cancel.message : cancelMessage;
 
-          _this2.sa(errorTitle, errorMessage, 'error').then(function (res) {
-            if (onerror !== false) {
-              onerror();
+            _this2.sa(cancelTitle, cancelMessage, 'error').then(function (res) {
+              if (oncancel !== false) {
+                oncancel();
+              }
+            });
+          } else {
+            if (oncancel !== false) {
+              oncancel();
             }
-          });
+          }
         }
       });
     }

@@ -98,7 +98,7 @@ class UIRender {
 		}
 	}
 
-	question({title = 'Подтверждение', yes = 'Да, сделать это', no = 'Нет, отменить', message = 'Вы уверены, что хотите это сделать', success = false, onsuccess = false, error = false, onerror = false}) {
+	question({title = 'Подтверждение', yes = 'Да, сделать это', no = 'Нет, отменить', message = 'Вы уверены, что хотите это сделать', success = false, onsuccess = false, cancel = false, oncancel = false}) {
 		console.log();
 		this.sa({
 			title: title,
@@ -115,35 +115,44 @@ class UIRender {
 				if(success !== false) {
 					successTitle = (typeof success.title !== 'undefined') ? success.title : successTitle;
 					successMessage = (typeof success.message !== 'undefined') ? success.message : successMessage;
-				}
-				this.sa(
-					successTitle,
-					successMessage,
-					'success'
-				).then((res) => {
+					this.sa(
+						successTitle,
+						successMessage,
+						'success'
+					).then((res) => {
+						if(onsuccess !== false){
+							onsuccess();
+						}
+					})
+				} else {
 					if(onsuccess !== false){
 						onsuccess();
 					}
-				})
+				}
+
 			} else if (
 				// Read more about handling dismissals
 				result.dismiss === this.sa.DismissReason.cancel
 			) {
-				let errorTitle = 'Отменено',
-					errorMessage = 'Действие не было выполнено'
-				if(error !== false) {
-					errorTitle = (typeof error.title !== 'undefined') ? error.title : errorTitle;
-					errorMessage = (typeof error.message !== 'undefined') ? error.message : errorMessage;
-				}
-				this.sa(
-					errorTitle,
-					errorMessage,
-					'error'
-				).then((res) => {
-					if(onerror !== false){
-						onerror();
+				let cancelTitle = 'Отменено',
+					cancelMessage = 'Действие не было выполнено'
+				if(cancel !== false) {
+					cancelTitle = (typeof cancel.title !== 'undefined') ? cancel.title : cancelTitle;
+					cancelMessage = (typeof cancel.message !== 'undefined') ? cancel.message : cancelMessage;
+					this.sa(
+						cancelTitle,
+						cancelMessage,
+						'error'
+					).then((res) => {
+						if (oncancel !== false) {
+							oncancel();
+						}
+					})
+				} else {
+					if (oncancel !== false) {
+						oncancel();
 					}
-				})
+				}
 			}
 		});
 	}
