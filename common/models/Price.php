@@ -3,8 +3,11 @@
 namespace common\models;
 
 use common\helpers\DateHelper;
+use common\helpers\Parser;
+use League\Flysystem\Util;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Exception;
 use yii\helpers\Json;
 
 /**
@@ -131,6 +134,102 @@ class Price extends \yii\db\ActiveRecord
             return $parserJson[$param];
         }
         return $default;
+    }
+
+
+    public function startParser()
+    {
+        if ($this->source_type == self::SOURCE_TYPE_LINK) {
+            try {
+                $content = file_get_contents($this->path);
+            } catch (\Exception $exception) {
+                //todo not found
+                dd('not found', $exception);
+            }
+            $fname = tempnam(sys_get_temp_dir(), 'avito-helper-parser-price-');
+            file_put_contents($fname, $content);
+        } else if ($this->source_type == self::SOURCE_TYPE_LOCAL) {
+            if (!file_exists($this->path)) {
+                //todo not found
+                dd('not found (local)', $this->path);
+            }
+            $fname = $this->path;
+        } else {
+            //todo unsupported source type
+            dd('unsupported source type', $this->source_type);
+        }
+
+        if ($this->type == self::TYPE_XLS) {
+            $mime = Util\MimeType::detectByContent($content);
+            if (!Parser::checkMime($this->type, $mime)) {
+                //todo mime error
+                dd('Mime error', $mime);
+            }
+
+            try {
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fname);
+
+            } catch (\Exception $exception) {
+                //todo xls read error
+                dd('xls read error', $exception);
+            }
+            $sheetIndex = (int)$this->getParserParam('list', 1) - 1;
+            if ($sheetIndex < 0) {
+                $sheetIndex = 0;
+            }
+            $first = (int)$this->getParserParam('line', 1);
+            if ($first < 0) {
+                $first = 0;
+            }
+            $titleChar = $this->getParserParam('title', 'A');
+            $descriptionChar = $this->getParserParam('description', 'B');
+            $priceChar = $this->getParserParam('price', 'C');
+
+            try {
+                $sheet = $spreadsheet->getSheet($sheetIndex);
+            } catch (\Exception $exception) {
+                dd('xls sheet error', $exception);
+            }
+
+            $last = $sheet->getHighestRow();
+            $conditions = $this->getConditions();
+            $rows = [];
+            foreach ($sheet->getRowIterator($first, $last) as $row) {
+                $title = $sheet->getCell($titleChar . $row->getRowIndex())->getValue();
+                $description = $sheet->getCell($descriptionChar . $row->getRowIndex())->getValue();
+                $price = (float)$sheet->getCell($priceChar . $row->getRowIndex())->getValue();
+                if (!$title || strlen($title) < 2) {
+                    continue;
+                }
+                $cellIterator = $row->getCellIterator();
+                $rowArray = [];
+                foreach ($cellIterator as $cell) {
+                    $rowArray[$cell->getColumn()] = $cell->getValue();
+                }
+                if (Parser::checkConditions($rowArray, $conditions)) {
+                    $data = [
+                        'row' => $row->getRowIndex(),
+                        'sheet' => $sheet->getTitle(),
+                        'title' => $title,
+                        'description' => $description,
+                        'price' => $price,
+                    ];
+                    $rows[$row->getRowIndex()] = $data;
+                }
+            }
+
+            foreach ($rows as $row) {
+                //$product = self::findOne()
+            }
+            dd($rows);
+
+        }
+
+    }
+
+    public function loadFromFile($path)
+    {
+        file_get_contents($path);
     }
 
     /**

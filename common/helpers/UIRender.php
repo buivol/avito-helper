@@ -20,6 +20,7 @@ class UIRender
     private $message = '';
     private $needRedirect = false;
     private $entityId = null;
+    private $values = [];
 
 
     /**
@@ -55,12 +56,23 @@ class UIRender
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return $this
      */
     public function setId($id)
     {
         $this->entityId = $id;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return $this
+     */
+    public function val($name, $value = true)
+    {
+        $this->values[$name] = $value;
         return $this;
     }
 
@@ -84,6 +96,7 @@ class UIRender
             'redirect' => $this->successRedirect,
             'errors' => $this->errors,
             'entityId' => $this->entityId ?? 0,
+            'values' => $this->values,
         ];
 
         return Json::encode($result);

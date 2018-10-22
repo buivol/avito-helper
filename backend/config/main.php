@@ -56,6 +56,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'api/yandexUpdate' => 'cron/yandex',
+                'api/parser/test' => 'price/parser-test',
                 'POST media/add' => 'media/upload',
                 'logout' => 'site/logout',
                 'login' => 'site/login',
@@ -63,7 +64,6 @@ return [
                 '<controller:\w+>/<id:\d+>/' => '<controller>/view',
                 'POST api/<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-
 
             ],
         ],

@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-header">
                     Список прайсов
                     <div class="card-options">
-                        <a href="/price/new?provider=<?= $provider->id ?>" class="btn btn-secondary btn-sm ml-2">Добавить прайс</a>
+                        <a href="/price/new?provider=<?= $provider->id ?>" class="btn btn-secondary btn-sm ml-2">Добавить
+                            прайс</a>
                     </div>
                 </div>
                 <div class="c-body table-responsive">

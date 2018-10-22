@@ -23,7 +23,9 @@
         "rmccue/requests": "dev-master",
         "imangazaliev/didom": "dev-master",
         "dmore/chrome-mink-driver": "^2.0@dev",
-        "behat/mink-goutte-driver": "^1.2@dev"
+        "behat/mink-goutte-driver": "^1.2@dev",
+        "league/flysystem": "^1.1@dev",
+        "phpoffice/phpspreadsheet": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

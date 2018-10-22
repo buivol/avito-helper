@@ -101,9 +101,23 @@ class PriceController extends BackendController
     {
         $model = Price::findOne(['id' => $id, 'user_id' => $this->user->id]);
         $ui = new UIRender();
-        $ui->addError('Ошибка при обновлении "' . $model->name . '". Обновление временно недоступно', 'prices');
+        if (!$model) {
+            return $ui->addError('Прайс не найден (' . $id . ')', 'prices')->run();
+        }
+
+
+        dd($model);
+        $ui->val('updated');
+
         $ui->setId($model->provider_id);
         return $ui->run();
+    }
+
+
+    public function actionParserTest()
+    {
+        $price = Price::findOne(1);
+        $price->startParser();
     }
 
     /**
