@@ -23,17 +23,21 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Language" content="en"/>
 
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#4188c9">
-
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
-    <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/v1/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/v1/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/v1/favicon-16x16.png">
+    <link rel="manifest" href="/v1/site.webmanifest">
+    <link rel="mask-icon" href="/v1/safari-pinned-tab.svg" color="#2365ad">
+    <link rel="shortcut icon" href="/v1/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-config" content="/v1/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -41,7 +45,7 @@ AppAsset::register($this);
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext">
     <script src="/v1/dist/assets/js/vendors/require.min.js"></script>
     <script src="/v1/dist/assets/js/dashboard.js"></script>
     <link href="/v1/dist/assets/css/dashboard.css" rel="stylesheet"/>
@@ -60,8 +64,8 @@ AppAsset::register($this);
             <div class="container">
                 <div class="d-flex">
                     <a class="header-brand" href="/">
-                        <img src="/v1/logo-w.png" class="header-brand-img"
-                             alt="tabler logo">
+                        <img src="/v1/logo-full.svg" class="header-brand-img"
+                             alt="salepro logo">
                     </a>
 
                     <div class="d-flex order-lg-2 ml-auto">
@@ -221,7 +225,7 @@ AppAsset::register($this);
                     </div>
                 </div>
                 <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-                    Copyright © 2018 <a href="/">VITOPRICE</a>. Разработан в <a href="#" target="_blank">intdigit.</a> Все права защищены
+                    Copyright © 2018 <a href="/">salepro</a>. Разработан в <a href="#" target="_blank">intdigit.</a> Все права защищены
                 </div>
             </div>
         </div>

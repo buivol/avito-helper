@@ -19,8 +19,8 @@ class ProductController extends BackendController
     }
 
     /**
-     * Finds the Product model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Finds the Product model based on itsP primary key value.
+     * If the model is not found, a 404 HTT exception will be thrown.
      * @param integer $id
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
