@@ -16,6 +16,31 @@ class UIRender {
 				window.location.href = href;
 			}
 		});
+
+		$('.ui-sibl-parent').on('change', function (e) {
+			$(this).prop('indeterminate', false);
+			$('.ui-sibl-child[data-sibl="' + $(this).data('sibl') + '"]').prop({
+				indeterminate: false,
+				checked: $(this).prop("checked")
+			});
+			$(this).trigger('sibl-change');
+		});
+
+		$('.ui-sibl-child').on('change', function (e) {
+			const $_this = $(this);
+			const checked = $_this.prop("checked");
+			const id = $_this.data('sibl');
+			let all = true;
+			$('.ui-sibl-child[data-sibl="' + id + '"]').each(function () {
+				return all = ($(this).prop("checked") === checked && all);
+			});
+			$('.ui-sibl-parent[data-sibl="' + $(this).data('sibl') + '"]').prop({
+				indeterminate: !all,
+				checked: all ? checked : false
+			});
+			$(this).trigger('sibl-change');
+		});
+
 		this.param = $('meta[name=csrf-param]').attr('content');
 		this.token = $('meta[name=csrf-token]').attr('content');
 

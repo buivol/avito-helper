@@ -1,0 +1,13 @@
+{
+  "count": 1,
+  "viewType": "short",
+  "items": [
+    {
+      "id": 1,
+      "title": "Apple macbook pro",
+      "code": "apple-mac-12x",
+      "price": 50002,
+      "mainImage": "https://placezombie.com/640x360?r=1"
+    }
+  ]
+}

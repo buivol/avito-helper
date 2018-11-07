@@ -27,9 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         E-mail: <a href="mailto:info@bonanzacom.ru">info@bonanzacom.ru</a><br>
                         <a href="http://www.bonanzacom.ru" target="_blank">www.bonanzacom.ru</a>
                     </p>
-                    <button class="btn btn-outline-default btn-sm">
+                    <a class="btn btn-outline-default btn-sm" href="#">
                         <span class="fa fa-pencil"></span> Настроить
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

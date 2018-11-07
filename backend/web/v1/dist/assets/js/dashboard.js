@@ -10,6 +10,7 @@ requirejs.config({
     'sa': {
       exports: 'swal'
     },
+    'calendar': ['bootstrap', 'jquery'],
     'core': ['bootstrap', 'jquery', 'sa', 'ui']
   },
   paths: {
@@ -21,6 +22,7 @@ requirejs.config({
     'tablesorter': 'assets/js/vendors/jquery.tablesorter.min',
     'circle-progress': 'assets/js/vendors/circle-progress.min',
     'dropzone': 'assets/js/vendors/dropzone',
+    'calendar': 'assets/js/calendar',
     'sa': 'assets/sa',
     'ui': 'assets/js/ui'
   }

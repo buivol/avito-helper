@@ -119,40 +119,27 @@ AppAsset::register($this);
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link <?= $this->context->menu == 'main' ? 'active' : '' ?>"><i class="fe fe-home"></i> Домашняя</a>
+                                <a href="/" class="nav-link <?= $this->context->menu == 'main' ? 'active' : '' ?>"><i class="fe fe-home"></i> Домашняя</a>
                             </li>
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link <?= $this->context->menu == 'product' ? 'active' : '' ?>" data-toggle="dropdown"><i class="fe fe-box"></i> Товары</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="./cards.html" class="dropdown-item ">Cards design</a>
-                                    <a href="./charts.html" class="dropdown-item ">Charts</a>
-                                    <a href="./pricing-cards.html" class="dropdown-item ">Pricing cards</a>
+                                    <a href="/product" class="dropdown-item ">Мои товары</a>
+                                    <a href="/product/add" class="dropdown-item ">Добавить новый</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="javascript:void(0)" class="nav-link <?= $this->context->menu == 'provider' ? 'active' : '' ?>" data-toggle="dropdown"><i class="fe fe-truck"></i> Поставщики</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
+                                    <a href="/provider" class="dropdown-item ">Мои поставщики</a>
                                     <a href="/provider/new" class="dropdown-item ">Добавить нового</a>
-                                    <a href="/provider" class="dropdown-item ">Список поставщиков</a>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Выгрузка</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="./profile.html" class="dropdown-item ">Profile</a>
-                                    <a href="./login.html" class="dropdown-item ">Login</a>
-                                    <a href="./register.html" class="dropdown-item ">Register</a>
-                                    <a href="./forgot-password.html" class="dropdown-item ">Forgot password</a>
-                                    <a href="./400.html" class="dropdown-item ">400 error</a>
-                                    <a href="./401.html" class="dropdown-item ">401 error</a>
-                                    <a href="./403.html" class="dropdown-item ">403 error</a>
-                                    <a href="./404.html" class="dropdown-item ">404 error</a>
-                                    <a href="./500.html" class="dropdown-item ">500 error</a>
-                                    <a href="./503.html" class="dropdown-item ">503 error</a>
-                                    <a href="./email.html" class="dropdown-item ">Email</a>
-                                    <a href="./empty.html" class="dropdown-item ">Empty page</a>
-                                    <a href="./rtl.html" class="dropdown-item ">RTL mode</a>
-                                </div>
+                            <li class="nav-item">
+                                <a href="/calendar" class="nav-link"><i class="fe fe-calendar"></i> Календарь</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/settings" class="nav-link"><i class="fe fe-sliders"></i> Настройки</a>
                             </li>
                         </ul>
                     </div>
@@ -178,26 +165,26 @@ AppAsset::register($this);
                     <div class="row">
                         <div class="col-6 col-md-3">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">First link</a></li>
-                                <li><a href="#">Second link</a></li>
+                                <li><a href="#">Панель управления</a></li>
+                                <li><a href="#">Статистика</a></li>
                             </ul>
                         </div>
                         <div class="col-6 col-md-3">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Third link</a></li>
-                                <li><a href="#">Fourth link</a></li>
+                                <li><a href="#">Быстрый экспорт</a></li>
+                                <li><a href="#">Презентации</a></li>
                             </ul>
                         </div>
                         <div class="col-6 col-md-3">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Fifth link</a></li>
-                                <li><a href="#">Sixth link</a></li>
+                                <li><a href="#">Обучение</a></li>
+                                <li><a href="#">Вопросы и ответы</a></li>
                             </ul>
                         </div>
                         <div class="col-6 col-md-3">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Other link</a></li>
-                                <li><a href="#">Last link</a></li>
+                                <li><a href="#">Предложить идею</a></li>
+                                <li><a href="#">Сообщить об ошибке</a></li>
                             </ul>
                         </div>
                     </div>

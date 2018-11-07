@@ -12,10 +12,14 @@ use yii\web\NotFoundHttpException;
 class ProductController extends BackendController
 {
 
+    public $menu = 'product';
+
+
     public function actionIndex()
     {
         $products = $this->user->products;
-        return $this->render('list', ['items' => $products]);
+        $prices = [];
+        return $this->render('list', ['items' => $products, 'prices' => $prices]);
     }
 
     /**

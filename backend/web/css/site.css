@@ -63,7 +63,7 @@
     transform: translateX(-50%) translateY(-50%);
 }
 
-.file-drop{
+.file-drop {
     height: 200px;
     width: 100%;
     border-radius: 8px;
@@ -74,44 +74,176 @@
     text-align: center;
 }
 
-.file-drop .hint{
+.file-drop .hint {
     color: #b1bccd;
     margin-top: 80px;
     position: relative;
     display: block;
 }
-.dz-started .hint{
-    display: none;
-}
-.drop-price .dz-success-mark{
-    display: none;
-}
-.drop-price .dz-error-mark{
-    display: none;
-}
-.drop-price .dz-image img{
+
+.dz-started .hint {
     display: none;
 }
 
-.drop-price .dz-image{
+.drop-price .dz-success-mark {
+    display: none;
+}
+
+.drop-price .dz-error-mark {
+    display: none;
+}
+
+.drop-price .dz-image img {
+    display: none;
+}
+
+.drop-price .dz-image {
     width: 100%;
     height: 100px;
     background: url("/img/spreadsheet.png") no-repeat center center;
     background-size: 65px 65px;
     opacity: .8;
 }
-.drop-price .dz-preview{
+
+.drop-price .dz-preview {
     display: none;
 }
 
-.drop-price .dz-processing{
+.drop-price .dz-processing {
     display: block;
     margin-top: 15px;
 }
 
-#save{
+#save {
     margin-left: 10px;
 }
+
 .swal2-cancel {
     margin-right: 30px;
+}
+
+.tristate {
+    position: relative;
+    display: inline-block;
+}
+
+.tristate > input[type="radio"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+.tristate > input[type="radio"] + i {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: top;
+}
+
+.tristate > input[type="radio"] + i, .tristate > input[type="radio"] + i:before, .tristate > input[type="radio"] + i:after {
+    transition: all 0.3s;
+}
+
+.tristate > input[type="radio"]:first-child {
+    z-index: 10;
+}
+
+.tristate > input[type="radio"]:first-child:checked {
+    z-index: 0;
+}
+
+.tristate > input[type="radio"]:checked + input[type="radio"] {
+    z-index: 10;
+}
+
+.tristate > input[type="radio"]:checked + i + label, .tristate > input[type="radio"]:checked + i + label + label {
+    display: none;
+}
+
+.tristate > input[type="radio"]:checked + input[type="radio"] + i + label, .tristate > input[type="radio"]:checked + input[type="radio"] + i + label + label + label {
+    display: none;
+}
+
+.tristate > input[type="radio"]:checked + input[type="radio"] + input[type="radio"] + i + label + label, .tristate > input[type="radio"]:checked + input[type="radio"] + input[type="radio"] + i + label + label + label {
+    display: none;
+}
+
+.tristate-switcher > input[type="radio"] {
+    background: #e9ecef;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    height: 1.25rem;
+    width: 2.25rem;
+    left: -3px;
+    top: -1px;
+}
+
+.tristate-switcher > input[type="radio"] + i {
+    height: 1.25rem;
+    width: 2.25rem;
+    margin-top: 2px;
+    background: #e9ecef;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    transition: .3s border-color, .3s background-color;
+}
+
+.tristate-switcher > input[type="radio"] + i:before {
+    content: ' ';
+    position: absolute;
+    /*top: -3px;*/
+    /*left: -3px;*/
+    display: block;
+    height: calc(1.25rem - 4px);
+    width: calc(1.25rem - 4px);
+    top: 1px;
+    left: 0px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .3s left;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.tristate-switcher > input[type="radio"]:checked + i {
+    background-color: #467fcf;
+}
+
+.tristate-switcher > input[type="radio"]:checked + i:before {
+    left: calc(1.25rem - 4px);
+    background-color: #fff;
+}
+
+.tristate-switcher > input[type="radio"]:checked + input[type="radio"] + i:before {
+    left: calc(0.8rem - 4px);
+}
+
+.tristate-switcher > input[type="radio"]:checked + input[type="radio"] + input[type="radio"] + i {
+    background-color: #f9a19a;
+}
+
+.tristate-switcher > input[type="radio"]:checked + input[type="radio"] + input[type="radio"] + i:before {
+    background-color: #fff;
+}
+
+.btn-table td {
+    padding-top: 15px;
+}
+
+.ul-checkboxes{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ul-checkboxes ul{
+    list-style: none;
+    padding-left: 11px;
+    margin-left: 7px;
+    border-left: 2px dashed #edf2fa;
 }
