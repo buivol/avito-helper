@@ -205,4 +205,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(HeadCategory::class, ['id' => 'head_id'])->andWhere(['status' => HeadCategory::STATUS_ACTIVE]);
     }
+
+    public function getSecure()
+    {
+        return substr(md5($this->id . 'salepro'), 1, 6);
+    }
+
+    public function getXmlLink()
+    {
+        return 'https://av.ru/avito/' . $this->id . '/' . $this->secure . '.xml';
+    }
 }

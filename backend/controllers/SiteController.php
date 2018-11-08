@@ -41,7 +41,8 @@ class SiteController extends BackendController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->menu = 'main';
+        return $this->render('index', ['user' => $this->user]);
     }
 
     /**
