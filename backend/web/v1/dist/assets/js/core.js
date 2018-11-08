@@ -30,6 +30,15 @@ require(['jquery', 'sa'], function ($, sa) {
 
     $('[data-toggle="popover"]').popover({
       html: true
+    }); //fix header
+
+    var menuTop = $('#headerMenuCollapse').offset().top;
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > menuTop) {
+        $('#headerMenuCollapse').addClass('header-fixed');
+      } else {
+        $('#headerMenuCollapse').removeClass('header-fixed');
+      }
     });
     /** Function for remove card */
 

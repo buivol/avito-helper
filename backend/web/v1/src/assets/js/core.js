@@ -32,6 +32,16 @@ require(['jquery','sa'], function ($, sa) {
 			html: true
 		});
 
+		//fix header
+		const menuTop = $('#headerMenuCollapse').offset().top;
+		$(window).scroll(function () {
+			if ($(window).scrollTop() > menuTop) {
+				$('#headerMenuCollapse').addClass('header-fixed');
+			} else {
+				$('#headerMenuCollapse').removeClass('header-fixed');
+			}
+		});
+
 		/** Function for remove card */
 		$('[data-toggle="card-remove"]').on('click', function (e) {
 			let $card = $(this).closest(DIV_CARD);

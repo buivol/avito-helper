@@ -256,3 +256,11 @@
     position: absolute !important;
     z-index: 999;
 }
+
+.header-fixed{
+    width: 100%;
+    z-index: 99;
+    position: fixed;
+    background: red;
+    top: 0;
+}
