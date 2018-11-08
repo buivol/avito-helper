@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-10">
         <div class="card">
             <div class="card-header">
-                Неотсортированные
+                <h3 class="card-title">Настройка категорий</h3>
             </div>
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter">
@@ -186,7 +186,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 for (var i = 0; i < dayArray.length; i++) {
                     var day = dayArray[i];
                     var confDay = {
-                        active: false,
+                        active: 0,
                         start: {
                             hours: $('#time-settings-day-' + day + '-start-hours').val(),
                             minutes: $('#time-settings-day-' + day + '-start-minutes').val(),
@@ -197,11 +197,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     };
                     if ($('#time-settings-day-' + day + '-active').is(':checked')) {
-                        confDay.active = true;
+                        confDay.active = 1;
                         $('#sub-day-td-' + day + '-' + subId).removeClass('sub-day-td-inactive');
                         $('#sub-time-td-' + day + '-' + subId).removeClass('sub-time-td-inactive');
                     } else {
-                        confDay.active = false;
+                        confDay.active = 0;
                         $('#sub-day-td-' + day + '-' + subId).addClass('sub-day-td-inactive');
                         $('#sub-time-td-' + day + '-' + subId).addClass('sub-time-td-inactive');
                     }
