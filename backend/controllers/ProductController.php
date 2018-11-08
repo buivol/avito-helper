@@ -2,8 +2,11 @@
 
 namespace backend\controllers;
 
+use common\helpers\UIRender;
+use common\models\SubCategoryConfig;
 use Yii;
 use common\models\Product;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -40,8 +43,27 @@ class ProductController extends BackendController
         $this->saveButton = 'Сохранить';
         $headCategory = $this->user->headCategory;
         $categories = $headCategory->categories;
-        return $this->render('categories_config', ['items' => $categories]);
+        return $this->render('categories_config', ['items' => $categories, 'user' => $this->user]);
     }
+
+
+    public function actionSavesub($id)
+    {
+        $ui = new UIRender();
+        $post = Yii::$app->request->post();
+        $newConfig = Json::encode($post);
+        $config = SubCategoryConfig::findOne(['sub_category_id' => $id, 'user_id' => $this->user->id]);
+        if(!$config){
+            $config = new SubCategoryConfig;
+            $config->sub_category_id = $id;
+            $config->user_id = $this->user->id;
+        }
+
+        $config->config = $newConfig;
+        $config->save(false);
+        return $ui->run();
+    }
+
 
     /**
      * Finds the Product model based on itsP primary key value.

@@ -31,11 +31,23 @@ class SubCategory extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param int $userId
      * @return \yii\db\ActiveQuery
      */
-    public function getProducts()
+    public function getProducts($userId = null)
     {
-        return $this->hasMany(Product::class, ['sub_category_id' => 'id'])->andWhere(['status' => [Product::STATUS_ACTIVE, Product::STATUS_DISABLED]]);
+        $query = $this->hasMany(Product::class, ['sub_category_id' => 'id'])->andWhere(['status' => [Product::STATUS_ACTIVE, Product::STATUS_DISABLED]]);
+        if ($userId) {
+            $query->andWhere(['user_id' => $userId]);
+        }
+
+        return $query;
+    }
+
+    public function getUserConfig($userId)
+    {
+        $config = SubCategoryConfig::findOne(['sub_category_id' => $this->id, 'user_id' => $userId]);
+        return $config ? $config->configArray : SubCategoryConfig::getDefault();
     }
 
 }
