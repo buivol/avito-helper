@@ -64,7 +64,7 @@ return [
                 '<controller:\w+>/<id:\d+>/' => '<controller>/view',
                 'POST api/<controller:\w+>/<id:\d+>/<action:\w+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-
+                '<controller:\w+>/<action:\w+>/<feature:\w+>/' => '<controller>/<action>-<feature>',
             ],
         ],
 

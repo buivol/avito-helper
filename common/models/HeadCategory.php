@@ -11,8 +11,10 @@ use Yii;
  * @property int $photo_max
  * @property string $name
  * @property int $status
+ *
+ * @property Category[] $categories
  */
-class Category extends \yii\db\ActiveRecord
+class HeadCategory extends \yii\db\ActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
@@ -25,5 +27,10 @@ class Category extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'head_category';
+    }
+
+    public function getCategories()
+    {
+        return $this->hasMany(Category::class, ['parent_id' => 'id'])->andWhere(['status' => Provider::STATUS_ACTIVE]);
     }
 }

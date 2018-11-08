@@ -125,7 +125,7 @@ AppAsset::register($this);
                                 <a href="javascript:void(0)" class="nav-link <?= $this->context->menu == 'product' ? 'active' : '' ?>" data-toggle="dropdown"><i class="fe fe-box"></i> Товары</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     <a href="/product" class="dropdown-item ">Мои товары</a>
-                                    <a href="/product/add" class="dropdown-item ">Добавить новый</a>
+                                    <a href="/product/categories" class="dropdown-item ">Категории</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

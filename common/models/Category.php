@@ -11,6 +11,8 @@ use Yii;
  * @property int $parent_id
  * @property string $name
  * @property int $status
+ *
+ * @property SubCategory[] $subCategories
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -25,5 +27,10 @@ class Category extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'category';
+    }
+
+    public function getSubCategories()
+    {
+        return $this->hasMany(SubCategory::class, ['parent_id' => 'id'])->andWhere(['status' => Provider::STATUS_ACTIVE]);
     }
 }

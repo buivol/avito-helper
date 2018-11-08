@@ -22,6 +22,26 @@ class ProductController extends BackendController
         return $this->render('list', ['items' => $products, 'prices' => $prices]);
     }
 
+    public function actionCategories()
+    {
+        $cat = 'yandex';
+        return $this->redirect('/product/categories/' . $cat);
+    }
+
+    public function actionCategoriesYandex()
+    {
+        $headCategory = $this->user->headCategory;
+        $categories = $headCategory->categories;
+        return $this->render('categories_yandex', ['items' => $categories]);
+    }
+
+    public function actionCategoriesConfig()
+    {
+        $headCategory = $this->user->headCategory;
+        $categories = $headCategory->categories;
+        return $this->render('categories_config', ['items' => $categories]);
+    }
+
     /**
      * Finds the Product model based on itsP primary key value.
      * If the model is not found, a 404 HTT exception will be thrown.

@@ -11,8 +11,9 @@ use Yii;
  * @property int $parent_id
  * @property string $name
  * @property int $status
+ * @property int $hide_xml
  */
-class Category extends \yii\db\ActiveRecord
+class SubCategory extends \yii\db\ActiveRecord
 {
 
     const STATUS_ACTIVE = 1;
@@ -26,4 +27,6 @@ class Category extends \yii\db\ActiveRecord
     {
         return 'sub_category';
     }
+
+
 }

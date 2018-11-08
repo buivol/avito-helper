@@ -23,6 +23,7 @@ use yii\web\IdentityInterface;
  *
  * @property Provider[] $providers
  * @property Product[] $products
+ * @property HeadCategory $headCategory
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -198,5 +199,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function getProviders()
     {
         return $this->hasMany(Provider::class, ['user_id' => 'id'])->andWhere(['status' => [Provider::STATUS_ACTIVE, Provider::STATUS_DISABLED]]);
+    }
+
+    public function getHeadCategory()
+    {
+        return $this->hasOne(HeadCategory::class, ['id' => 'head_id'])->andWhere(['status' => HeadCategory::STATUS_ACTIVE]);
     }
 }

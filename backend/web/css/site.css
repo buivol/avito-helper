@@ -235,15 +235,24 @@
     padding-top: 15px;
 }
 
-.ul-checkboxes{
+.ul-checkboxes {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.ul-checkboxes ul{
+.ul-checkboxes ul {
     list-style: none;
     padding-left: 11px;
     margin-left: 7px;
     border-left: 2px dashed #edf2fa;
+}
+
+.selectize-dropdown .optgroup-header {
+    color: #c2c2c2 !important;
+    border-bottom: 1px solid #eeeeee;
+}
+.selectize-dropdown {
+    position: absolute !important;
+    z-index: 999;
 }
