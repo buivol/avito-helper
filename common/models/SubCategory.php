@@ -12,6 +12,8 @@ use Yii;
  * @property string $name
  * @property int $status
  * @property int $hide_xml
+ *
+ * @property Product[] $products
  */
 class SubCategory extends \yii\db\ActiveRecord
 {
@@ -28,5 +30,12 @@ class SubCategory extends \yii\db\ActiveRecord
         return 'sub_category';
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::class, ['sub_category_id' => 'id'])->andWhere(['status' => [Product::STATUS_ACTIVE, Product::STATUS_DISABLED]]);
+    }
 
 }

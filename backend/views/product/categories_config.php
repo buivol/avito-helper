@@ -33,24 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span class="icon mr-3"><i class="fe fe-sliders"></i></span>Настройки
                 </a>
             </div>
-
-
-            <?php foreach ($items as $item): ?>
-                <ul>
-                    <li>
-                        <?= $item->name ?>
-                        <?php if (count($item->subCategories)) : ?>
-                            <ul>
-                                <?php foreach ($item->subCategories as $subCategory): ?>
-                                    <li><?= $subCategory->name ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
-                    </li>
-                </ul>
-            <?php endforeach; ?>
-
-
         </div>
     </div>
 
@@ -69,27 +51,60 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="w-1">
-                            <sssß
-                        </td>
-                        <td>Наушники ASUS rogue 12x wifi bluetooth</td>
-                        <td>Игровые наушники ASUS</td>
-                        <td>
-                            <select class="form-control">
-                                <option hidden>Выбрать категорию</option>
-                                <?php foreach ($categories as $category): ?>
-                                    <?php if (count($category->subCategories)) : ?>
-                                        <optgroup label="<?= $category->name ?>">
-                                            <?php foreach ($category->subCategories as $subCategory): ?>
-                                                <option value="<?= $subCategory->id ?>"><?= $subCategory->name ?></option>
-                                            <?php endforeach; ?>
-                                        </optgroup>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                    </tr>
+                    <?php foreach ($items as $category): ?>
+                        <tr>
+                            <td class="w-1" colspan="2">
+                                <?= $category->name ?>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <?php foreach ($category->subCategories as $subCategory): ?>
+                            <tr>
+                                <td class="w-1">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <?= $subCategory->name ?>
+                                </td>
+                                <td>
+                                    <?= $subCategory->getProducts()->count() ?>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>Пн</td>
+                                            <td>Вт</td>
+                                            <td>Ср</td>
+                                            <td>Чт</td>
+                                            <td>Пт</td>
+                                            <td>Сб</td>
+                                            <td>Вс</td>
+                                        </tr>
+                                        <tr>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                            <td>08:00 22:00</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <a href="#" class="icon"><i class="fe fe-settings"></i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
