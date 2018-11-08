@@ -80,27 +80,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td>
                                     <table>
                                         <tr>
-                                            <td>Пн</td>
-                                            <td>Вт</td>
-                                            <td>Ср</td>
-                                            <td>Чт</td>
-                                            <td>Пт</td>
-                                            <td>Сб</td>
-                                            <td>Вс</td>
+                                            <td class="text-center">Пн</td>
+                                            <td class="text-center">Вт</td>
+                                            <td class="text-center">Ср</td>
+                                            <td class="text-center">Чт</td>
+                                            <td class="text-center">Пт</td>
+                                            <td class="text-center">Сб</td>
+                                            <td class="text-center">Вс</td>
                                         </tr>
                                         <tr>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
-                                            <td>08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
+                                            <td class="text-center">08:00 22:00</td>
                                         </tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <a href="#" class="icon"><i class="fe fe-settings"></i></a>
+                                    <a href="#" class="icon categories-config-action"><i class="fe fe-settings"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -113,11 +113,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
+<?= $this->render('//parts/time_settings', []) ?>
 
 <script>
     require(['jquery', 'selectize'], function ($, selectize) {
         $(document).ready(function () {
-
+            $('.categories-config-action').on('click', function (e) {
+                e.preventDefault();
+                ui.sa({'title': 'Настройка времени', 'html': $('#timeSettingsModal').html()});
+            })
         });
     });
 </script>

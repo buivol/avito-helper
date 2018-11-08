@@ -37,6 +37,7 @@ class ProductController extends BackendController
 
     public function actionCategoriesConfig()
     {
+        $this->saveButton = 'Сохранить';
         $headCategory = $this->user->headCategory;
         $categories = $headCategory->categories;
         return $this->render('categories_config', ['items' => $categories]);
