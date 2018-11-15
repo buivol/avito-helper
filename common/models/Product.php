@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property int $provider_id
+ * @property int $price_id
  * @property string $provider_art
  * @property string $provider_title
  * @property string $provider_description

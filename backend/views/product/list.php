@@ -6,6 +6,8 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $items \common\models\Product[] */
+/* @var $categories array */
+/* @var $providers array */
 
 $this->title = 'Список товаров';
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="card-body">
                         <div class="selectgroup selectgroup-pills">
-                            <label class="selectgroup-item">
+                            <label class="selectgroup-item" title="">
                                 <input type="checkbox" name="value" value="0" class="selectgroup-input" checked="">
                                 <span class="selectgroup-button selectgroup-button-icon"><i
                                             class="fe fe-play"></i></span>
@@ -67,61 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Категории</div>
-                        <div class="card-options">
-                            <a href="#" class="btn btn-secondary btn-sm ml-2"><i class="fe fe-check-circle"></i></a>
-                        </div>
                     </div>
                     <div class="card-body">
-                        <ul class="ul-checkboxes">
-                            <li>
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent" data-sibl="1" name="example-checkbox2"
-                                           value="option2">
-                                    <span class="custom-control-label">Родительская категория 1</span>
-                                </label>
-
-                                <ul>
-                                    <li>
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="1" name="example-checkbox3"
-                                                   value="option2">
-                                            <span class="custom-control-label">Дочерняя категория 1</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="1" name="example-checkbox4"
-                                                   value="option2">
-                                            <span class="custom-control-label">Дочерняя категория 2</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent" data-sibl="2" name="example-checkbox2"
-                                           value="option2">
-                                    <span class="custom-control-label">Родительская категория 2</span>
-                                </label>
-
-                                <ul>
-                                    <li>
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="2" name="example-checkbox3"
-                                                   value="option2">
-                                            <span class="custom-control-label">Дочерняя категория 3</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="2" name="example-checkbox4"
-                                                   value="option2">
-                                            <span class="custom-control-label">Дочерняя категория 4</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <?= $this->render('filters_categories', ['categories' => $categories]) ?>
                     </div>
                 </div>
             </div>
@@ -269,42 +219,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Поставщики</div>
-                        <div class="card-options">
-                            <a href="#" class="btn btn-secondary btn-sm ml-2"><i class="fe fe-check-circle"></i></a>
-                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="selectgroup selectgroup-pills">
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="value" value="HTML" class="selectgroup-input"
-                                       checked="">
-                                <span class="selectgroup-button">Bonanza</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-6 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Прайсы</div>
-                        <div class="card-options">
-                            <a href="#" class="btn btn-secondary btn-sm ml-2"><i class="fe fe-check-circle"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="selectgroup selectgroup-pills">
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="value" value="0" class="selectgroup-input" checked="">
-                                <span class="selectgroup-button">Общий прайс</span>
-                            </label>
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="value" value="1" class="selectgroup-input">
-                                <span class="selectgroup-button">Премиум за 24</span>
-                            </label>
-                        </div>
+                        <?= $this->render('filters_providers', ['providers' => $providers]) ?>
                     </div>
                 </div>
             </div>
@@ -334,18 +251,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<?php foreach ($items as $item): ?>
-
-    <h1><?= $item->provider_art ?></h1>
-
-<?php endforeach; ?>
-
 <script>
 
     require(['jquery'], function ($) {
         $(document).ready(function () {
             $('.ui-sibl').on('sibl-change', function (e) {
-              console.log('sibl-change');
+                console.log('sibl-change');
             });
         });
     });

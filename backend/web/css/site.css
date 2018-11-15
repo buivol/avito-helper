@@ -269,3 +269,17 @@
 .sub-time-td-inactive {
     color: #d6d6d6;
 }
+
+.count-label {
+    font-size: 14px;
+    display: block;
+    width: 100%;
+
+}
+
+.count-label span {
+    color: #bebebe;
+    padding-left: 4px;
+    font-size: 10px;
+
+}

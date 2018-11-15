@@ -18,6 +18,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property Price[] $prices
+ * @property int $productsCount
  */
 class Provider extends \yii\db\ActiveRecord
 {
@@ -50,4 +51,13 @@ class Provider extends \yii\db\ActiveRecord
         return $this->hasMany(Price::class, ['provider_id' => 'id'])->andWhere(['status' => [Price::STATUS_ACTIVE, Price::STATUS_DISABLED]]);
     }
 
+    public function getProductsCount()
+    {
+        $count = 0;
+        foreach ($this->prices as $price) {
+            $count += count($price->products);
+        }
+
+        return $count;
+    }
 }

@@ -21,6 +21,9 @@ class Category extends \yii\db\ActiveRecord
     const STATUS_DISABLED = 2;
     const STATUS_DELETED = 7;
 
+    private $_userId = null;
+    private $_subsWithProducts = null;
+
     /**
      * {@inheritdoc}
      */
@@ -28,6 +31,39 @@ class Category extends \yii\db\ActiveRecord
     {
         return 'category';
     }
+
+    /**
+     * @param integer $userId
+     * @return SubCategory[]
+     */
+    public function getSubsWithProducts($userId)
+    {
+        $result = [];
+        $subs = $this->subCategories;
+        foreach ($subs as $sub) {
+            $count = $sub->getProductsCount($userId);
+            if ($count) {
+                $result[] = $sub;
+            }
+        }
+        $this->_userId = $userId;
+        $this->_subsWithProducts = $result;
+        return $result;
+    }
+
+    public function productCount($userId)
+    {
+        if ($this->_userId != $userId || !$this->_subsWithProducts) {
+            $subs = $this->getSubsWithProducts($userId);
+        }
+        $count = 0;
+        foreach ($subs as $sub) {
+            $count += $sub->getProductsCount($userId);
+        }
+        return $count;
+    }
+
+
 
     public function getSubCategories()
     {

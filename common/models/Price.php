@@ -37,6 +37,7 @@ use yii\helpers\Json;
  * @property PriceUpdate[] $updates
  * @property array $conditions
  * @property string $humanType
+ * @property Product[] $products
  */
 class Price extends \yii\db\ActiveRecord
 {
@@ -282,6 +283,11 @@ class Price extends \yii\db\ActiveRecord
     public function getProvider()
     {
         return $this->hasOne(Provider::class, ['id' => 'provider_id']);
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::class, ['price_id' => 'id']);
     }
 
 }

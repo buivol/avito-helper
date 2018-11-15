@@ -22,6 +22,9 @@ class SubCategory extends \yii\db\ActiveRecord
     const STATUS_DISABLED = 2;
     const STATUS_DELETED = 7;
 
+    private $_userId = null;
+    private $_productsCount = null;
+
     /**
      * {@inheritdoc}
      */
@@ -42,6 +45,21 @@ class SubCategory extends \yii\db\ActiveRecord
         }
 
         return $query;
+    }
+
+    /**
+     * @param int $userId
+     * @return int
+     */
+    public function getProductsCount($userId)
+    {
+        if ($userId != $this->_userId || $this->_productsCount === null) {
+            $this->_userId = $userId;
+            $this->_productsCount = $this->getProducts($userId)->count();
+        }
+
+        return $this->_productsCount;
+        
     }
 
     public function getUserConfig($userId)

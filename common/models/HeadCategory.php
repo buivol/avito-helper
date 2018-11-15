@@ -29,6 +29,9 @@ class HeadCategory extends \yii\db\ActiveRecord
         return 'head_category';
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCategories()
     {
         return $this->hasMany(Category::class, ['parent_id' => 'id'])->andWhere(['status' => Provider::STATUS_ACTIVE]);
