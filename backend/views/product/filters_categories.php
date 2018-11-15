@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
     <?php foreach ($categories as $category): ?>
         <li>
             <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent" data-sibl="category-<?= $category['id'] ?>"
+                <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent filter-change-sibl" data-sibl="category-<?= $category['id'] ?>"
                        name="filterCategoryParent[]"
                        value="<?= $category['id'] ?>" checked="checked">
                 <span class="custom-control-label count-label"><?= $category['name'] ?><span><?= $category['count'] ?></span></span>
@@ -23,7 +23,7 @@ use yii\widgets\Pjax;
                 <?php foreach ($category['subs'] as $sub): ?>
                 <li>
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="category-<?= $sub['parent_id'] ?>"
+                        <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child filter-change-sibl" data-sibl="category-<?= $sub['parent_id'] ?>"
                                name="filterCategorySub[]"
                                value="<?= $sub['id'] ?>" checked="checked">
                         <span class="custom-control-label count-label"><?= $sub['name'] ?><span><?= $sub['count'] ?></span></span>

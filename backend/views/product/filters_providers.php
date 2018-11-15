@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
     <?php foreach ($providers as $provider): ?>
         <li>
             <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent" data-sibl="provider-<?= $provider['id'] ?>"
+                <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-parent filter-change-sibl" data-sibl="provider-<?= $provider['id'] ?>"
                        name="filterProvider[]"
                        value="<?= $provider['id'] ?>" checked="checked">
                 <span class="custom-control-label count-label"><?= $provider['name'] ?><span><?= $provider['count'] ?></span></span>
@@ -23,7 +23,7 @@ use yii\widgets\Pjax;
                 <?php foreach ($provider['prices'] as $price): ?>
                 <li>
                     <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child" data-sibl="provider-<?= $price['parent_id'] ?>"
+                        <input type="checkbox" class="custom-control-input ui-sibl ui-sibl-child filter-change-sibl" data-sibl="provider-<?= $price['parent_id'] ?>"
                                name="filterPrice[]"
                                value="<?= $price['id'] ?>" checked="checked">
                         <span class="custom-control-label count-label"><?= $price['name'] ?><span><?= $price['count'] ?></span></span>

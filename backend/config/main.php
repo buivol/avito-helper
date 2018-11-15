@@ -57,6 +57,7 @@ return [
             'rules' => [
                 'api/yandexUpdate' => 'cron/yandex',
                 'api/parser/test' => 'price/parser-test',
+                'api/products.json' => 'product/json-products',
                 'POST media/add' => 'media/upload',
                 'logout' => 'site/logout',
                 'login' => 'site/login',

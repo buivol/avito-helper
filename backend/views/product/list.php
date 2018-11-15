@@ -229,20 +229,65 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
+
     <div class="col-lg-9">
+
+        <div class="products-header">
+            Выделено <span>0</span>
+            <div class="dropdown pull-right">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fe fe-more-horizontal"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Обновить с маркета</a>
+                </div>
+            </div>
+            <div class="dropdown pull-right mr-2">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fe fe-play mr-2"></i>Статус
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Запланировать</a>
+                    <a class="dropdown-item" href="#">Сменить даты</a>
+                    <a class="dropdown-item" href="#">Убрать с продажи</a>
+                </div>
+            </div>
+            <div class="dropdown pull-right mr-2">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fe fe-file-text mr-2"></i>Описание
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Настроить</a>
+                    <a class="dropdown-item" href="#">Редактировать эпилог</a>
+                    <a class="dropdown-item" href="#">Редактировать конец</a>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <table class="table card-table table-vcenter">
+                <thead>
+                <tr>
+                    <th colspan="2">Название</th>
+                    <th>Статус</th>
+                    <th>Срок</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr>
-                    <td><img src="demo/products/apple-macbook-pro.jpg" alt="" class="h-8"></td>
+                    <td><label class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" class="custom-control-input"
+                                   checked="">
+                            <span class="custom-control-label"></span>
+                        </label></td>
                     <td>
                         Apple MacBook Pro i7 3,1GHz/16/512/Radeon 560 Space Gray
-                        <div class="badge badge-default badge-md">New</div>
                     </td>
-                    <td class="text-right text-muted d-none d-md-table-cell text-nowrap">97 reviews</td>
-                    <td class="text-right text-muted d-none d-md-table-cell text-nowrap">13 offers</td>
+                    <td>В продаже</td>
+                    <td>24.12 - 01.01 (08:00)</td>
                     <td class="text-right">
-                        <strong>$1499</strong>
+                        1199
                     </td>
                 </tr>
                 </tbody>
@@ -255,8 +300,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     require(['jquery'], function ($) {
         $(document).ready(function () {
-            $('.ui-sibl').on('sibl-change', function (e) {
-                console.log('sibl-change');
+            var filterQuery = '';
+
+            function refreshFilterQuery() {
+                filterQuery = '/api/products.json?r=' + Math.random();
+
+                //categories
+
+                console.log('changedFilterQuery', filterQuery);
+            }
+
+            $('.filter-change-sibl').on('sibl-change', function (e) {
+                refreshFilterQuery();
             });
         });
     });

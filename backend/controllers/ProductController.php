@@ -79,6 +79,14 @@ class ProductController extends BackendController
         return $this->render('list', ['items' => $products, 'categories' => $categories, 'providers' => $providers]);
     }
 
+    public function actionJsonProducts($filter = false)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+
+        return ['hello' => 'world', 'filter' => $filter ? 'true' : 'false'];
+    }
+
     public function actionCategories()
     {
         $cat = 'yandex';
