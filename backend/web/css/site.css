@@ -258,12 +258,17 @@
     z-index: 999;
 }
 
-.header-fixed {
+#headerMenuCollapse.header-fixed {
     width: 100%;
     z-index: 99;
     position: fixed;
     top: 0;
 }
+
+#headerMenuTop.header-fixed {
+    margin-bottom: 75px;
+}
+
 
 .sub-day-td-inactive,
 .sub-time-td-inactive {

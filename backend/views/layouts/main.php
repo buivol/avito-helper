@@ -60,7 +60,7 @@ AppAsset::register($this);
 <div class="page">
     <div class="page-main">
 
-        <div class="header py-4">
+        <div id="headerMenuTop" class="header py-4">
             <div class="container">
                 <div class="d-flex">
                     <a class="header-brand" href="/">

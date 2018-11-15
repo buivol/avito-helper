@@ -35,8 +35,10 @@ require(['jquery', 'sa'], function ($, sa) {
     var menuTop = $('#headerMenuCollapse').offset().top;
     $(window).scroll(function () {
       if ($(window).scrollTop() > menuTop) {
+        $('#headerMenuTop').addClass('header-fixed');
         $('#headerMenuCollapse').addClass('header-fixed');
       } else {
+        $('#headerMenuTop').removeClass('header-fixed');
         $('#headerMenuCollapse').removeClass('header-fixed');
       }
     });
